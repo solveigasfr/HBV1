@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Report System</title>
 </head>
 <body>
-Some text
+<div th:switch="${reports}">
+  <h2 th:case="null">No reports yet</h2>
+  <div th:case="*">
+      <h2>Reports</h2>
+      <table>
+          <thread>
+              <tr>
+                  <th>Title</th>
+                  <th>Subject</th>
+                  <th>Location</th>
+                  <th>Images</th>
+                  <th>Date</th>
+              </tr>
+          </thread>
+          <tbody>
+          <tr th:each="report : ${reports}">
+              <td th:text="${report.getReportSubject()}"></td>
+
+              <!--<td th:text="${report.location}"></td>
+              <td th:text="${report.images}"></td>
+              <td th:text="${report.date}"></td>-->
+          </tr>
+          </tbody>
+      </table>
+  </div>
+  <p><a href="/addreport">Add a new report</a></p>
+
+</div>
 </body>
 </html>
