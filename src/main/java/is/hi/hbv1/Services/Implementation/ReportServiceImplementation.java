@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -21,20 +22,20 @@ public class ReportServiceImplementation implements ReportService {
         reportRepository.add(new Report(
                 ReportTitle.GARBAGECAN,
                 "Subject 1",
-                new double[]{1.234},
-                new String[]{"imgUrl1"},
+                new ArrayList<>(Arrays.asList(2.39,3.95)),
+                new ArrayList<>(Arrays.asList("image1.png", "image2.png")),
                 LocalDate.of(2021,5,13)));
         reportRepository.add(new Report(
                 ReportTitle.STREETLIGHTS,
                 "Subject 2",
-                new double[]{12.34},
-                new String[]{"imgUrl2"},
+                new ArrayList<>(Arrays.asList(2.39,3.95)),
+                new ArrayList<>(Arrays.asList("image50.png", "image51.png")),
                 LocalDate.of(2021,10,18)));
         reportRepository.add(new Report(
                 ReportTitle.ROADWORK,
                 "Subject 3",
-                new double[]{123.4},
-                new String[]{"imgUrl3"},
+                new ArrayList<>(Arrays.asList(2.39,3.95)),
+                new ArrayList<>(Arrays.asList("image99.png", "image100.png")),
                 LocalDate.of(2021,4,27)));
         // JPA gives each report and ID, but there we add them manually
 

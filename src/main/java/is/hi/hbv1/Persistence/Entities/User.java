@@ -1,7 +1,16 @@
 package is.hi.hbv1.Persistence.Entities;
 
-public class User {
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Entity
+@Table(name = "users")
+public class User implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userID;
+
     private String userName;
     private String userEmail;
     private String userPassword;

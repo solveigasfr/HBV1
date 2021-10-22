@@ -1,8 +1,24 @@
 package is.hi.hbv1.Persistence.Entities;
 
-import java.time.LocalDate;
+import com.sun.istack.NotNull;
 
-public class Report {
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "reports")
+public class Report implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long userID;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long reportID;
+
     public enum ReportTitle {
         TRAFFICLIGHTS,
         GARBAGECAN,
@@ -10,25 +26,37 @@ public class Report {
         ROADWORK,
         OTHER
     }
-    private long userID;
-    private long reportID;
 
+    @NotNull
     private ReportTitle reportTitle;
-    private String reportSubject;
-    private double[] reportLocation;
-    private String[] reportImages;
+    private String reportSubject = null;
+    @ElementCollection
+    private List<Double> reportLocation = new ArrayList<>();
+    @ElementCollection
+    private List<String> reportImages = new ArrayList<>();
+    @NotNull
     private LocalDate reportDate;
 
     public Report() {
     }
 
-    public Report(ReportTitle reportTitle, String reportSubject, double[] reportLocation, String[] reportImages, LocalDate reportDate) {
+    public Report(ReportTitle reportTitle, String reportSubject,
+                  List<Double> reportLocation, List<String> reportImages,
+                  LocalDate reportDate) {
         this.reportTitle = reportTitle;
         this.reportSubject = reportSubject;
         this.reportLocation = reportLocation;
         this.reportImages = reportImages;
         this.reportDate = reportDate;
     }
+
+    /*
+    public Report(ReportTitle reportTitle, String reportSubject, LocalDate reportDate) {
+        this.reportTitle = reportTitle;
+        this.reportSubject = reportSubject;
+        this.reportDate = reportDate;
+    }
+     */
 
     public long getUserID() {
         return userID;
@@ -62,19 +90,19 @@ public class Report {
         this.reportSubject = reportSubject;
     }
 
-    public double[] getReportLocation() {
+    public List<Double> getReportLocation() {
         return reportLocation;
     }
 
-    public void setReportLocation(double[] reportLocation) {
+    public void setReportLocation(List<Double> reportLocation) {
         this.reportLocation = reportLocation;
     }
 
-    public String[] getReportImages() {
+    public List<String> getReportImages() {
         return reportImages;
     }
 
-    public void setReportImages(String[] reportImages) {
+    public void setReportImages(List<String> reportImages) {
         this.reportImages = reportImages;
     }
 

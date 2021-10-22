@@ -21,7 +21,9 @@
           </thread>
           <tbody>
           <tr th:each="report : ${reports}">
+              <td th:text="${report.getReportTitle()}"></td>
               <td th:text="${report.getReportSubject()}"></td>
+              <td th:text="${report.getReportDate()}"></td>
 
               <!--<td th:text="${report.location}"></td>
               <td th:text="${report.images}"></td>
@@ -30,7 +32,7 @@
           </tbody>
       </table>
   </div>
-  <p><a href="/addreport">Add a new report</a></p>
+  <p><a href="/addReport">Add a new report</a></p>
 
 </div>
 </body>
