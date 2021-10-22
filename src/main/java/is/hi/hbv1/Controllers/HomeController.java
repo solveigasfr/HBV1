@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import java.util.List;
 
 @Controller
@@ -26,10 +28,9 @@ public class HomeController {
         model.addAttribute("reports", allReports);
         return "home";
     }
-/*
-    @RequestMapping(value = "/addreport", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/addReport", method = RequestMethod.GET)
     public String addReportForm(Report report) {
         return "newReport";
     }
-    */
 }
