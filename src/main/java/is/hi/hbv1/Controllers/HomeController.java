@@ -5,6 +5,7 @@ import is.hi.hbv1.Services.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -19,7 +20,6 @@ public class HomeController {
         this.reportService = reportService;
     }
 
-
     @RequestMapping("/")
     public String homePage(Model model) {
         // Call a method in a Service Class
@@ -29,8 +29,17 @@ public class HomeController {
         return "home";
     }
 
-    @RequestMapping(value = "/addReport", method = RequestMethod.GET)
-    public String addReportForm(Report report) {
+    @RequestMapping(value = "/createReport", method = RequestMethod.GET)
+    public String createReportGET(Report report) {
         return "newReport";
+    }
+
+    @RequestMapping(value = "/createReport", method = RequestMethod.POST)
+    public String createReportPOST(Report report, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "newReport";
+        }
+        reportService.save(report);
+        return "redirect:/";
     }
 }

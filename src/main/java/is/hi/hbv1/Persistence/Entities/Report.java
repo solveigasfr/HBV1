@@ -11,12 +11,15 @@ import java.util.List;
 @Entity
 @Table(name = "reports")
 public class Report implements Serializable {
+    /* Ingimar commented out 23.okt
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userID;
 
+     */
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long reportID;
 
     public enum ReportTitle {
@@ -58,6 +61,7 @@ public class Report implements Serializable {
     }
      */
 
+    /* Ingimar commented out 23.okt
     public long getUserID() {
         return userID;
     }
@@ -65,6 +69,7 @@ public class Report implements Serializable {
     public void setUserID(long userID) {
         this.userID = userID;
     }
+    */
 
     public long getReportID() {
         return reportID;
