@@ -8,9 +8,13 @@
 <h2>pls complain some more</h2>
 <form action="#" th:action="@{/createReport}" th:object="${report}" method="post">
     <label for="reportTitle">Title</label>
-    <input type="text" th:field="*{reportTitle}" id="reportTitle" placeholder="Title">
+    <!--<input type="text" th:field="*{reportTitle}" id="reportTitle" placeholder="Title"> -->
+        <!-- TODO uncomment this when enum works-->
+    <select>
+        <option id="reportTitle" th:each="reportTitle : ${T(is.hi.hbv1.Persistence.Entities.ReportTitle).values()}" th:value="${reportTitle}" th:text="${reportTitle.displayName}"></option>
+    </select>
     <span th:if="${#fields.hasErrors('reportTitle')}" th:errors="*{reportTitle}"></span>
-    <label for="reportSubject">Description</label>
+    <label for="reportSubject">Subject</label>
     <input type="text" th:field="*{reportSubject}" id="reportSubject" placeholder="Subject">
     <span th:if="${#fields.hasErrors('reportSubject')}" th:errors="*{reportSubject}"></span>
     <input type="submit" value="Send report">

@@ -30,7 +30,8 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/createReport", method = RequestMethod.GET)
-    public String createReportGET(Report report) {
+    public String createReportGET(Report report, Model model) {
+        model.addAttribute("report", report);
         return "newReport";
     }
 
@@ -40,6 +41,6 @@ public class HomeController {
             return "newReport";
         }
         reportService.save(report);
-        return "redirect:/";
+        return "confirmation";
     }
 }
