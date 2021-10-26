@@ -1,7 +1,8 @@
 package is.hi.hbv1.Services.Implementation;
 
 import is.hi.hbv1.Persistence.Entities.Report;
-import is.hi.hbv1.Persistence.Entities.Report.ReportTitle;
+// TODO uncomment this when enum works
+//import is.hi.hbv1.Persistence.Entities.Report.ReportTitle;
 import is.hi.hbv1.Persistence.Repositories.ReportRepository;
 import is.hi.hbv1.Services.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
