@@ -266,4 +266,7 @@ Contrib/**/
 .idea
 out
 
+# Database folder
+database/
+
 sqlite3.exe

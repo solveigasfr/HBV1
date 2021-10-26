@@ -22,13 +22,9 @@ public class Report implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long reportID;
 
-    public enum ReportTitle {
-        TRAFFICLIGHTS,
-        GARBAGECAN,
-        STREETLIGHTS,
-        ROADWORK,
-        OTHER
-    }
+
+
+
 
     @NotNull
     private ReportTitle reportTitle;
@@ -37,12 +33,13 @@ public class Report implements Serializable {
     private List<Double> reportLocation = new ArrayList<>();
     @ElementCollection
     private List<String> reportImages = new ArrayList<>();
-    @NotNull
+    //@NotNull
     private LocalDate reportDate;
 
     public Report() {
     }
 
+    // TODO Change String reportTitle back to ReportTitle reportTitle when enum works
     public Report(ReportTitle reportTitle, String reportSubject,
                   List<Double> reportLocation, List<String> reportImages,
                   LocalDate reportDate) {
@@ -52,6 +49,8 @@ public class Report implements Serializable {
         this.reportImages = reportImages;
         this.reportDate = reportDate;
     }
+
+
 
     /*
     public Report(ReportTitle reportTitle, String reportSubject, LocalDate reportDate) {
@@ -78,7 +77,6 @@ public class Report implements Serializable {
     public void setReportID(long reportID) {
         this.reportID = reportID;
     }
-
     public ReportTitle getReportTitle() {
         return reportTitle;
     }
