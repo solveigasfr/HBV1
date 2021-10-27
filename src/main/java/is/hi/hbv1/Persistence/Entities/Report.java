@@ -18,8 +18,10 @@ public class Report implements Serializable {
 
      */
 
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long reportID;
 
 
@@ -79,6 +81,10 @@ public class Report implements Serializable {
     }
     public ReportTitle getReportTitle() {
         return reportTitle;
+    }
+
+    public String getReportTitleAsString(){
+        return reportTitle.getDisplayName();
     }
 
     public void setReportTitle(ReportTitle reportTitle) {

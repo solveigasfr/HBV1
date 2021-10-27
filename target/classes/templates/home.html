@@ -13,6 +13,7 @@
       <table>
           <thread>
               <tr>
+                  <th>ID</th>
                   <th>Title</th>
                   <th>Subject</th>
                   <th>Location</th>
@@ -22,6 +23,7 @@
           </thread>
           <tbody>
           <tr th:each="report : ${reports}">
+              <td th:text="${report.getReportID()}"></td>
               <td th:text="${report.getReportTitle()}"></td>
               <td th:text="${report.getReportSubject()}"></td>
               <td th:text="${report.getReportDate()}"></td>
