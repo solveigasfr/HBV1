@@ -10,7 +10,7 @@ public interface ReportService {
     Report save(Report report);
     void delete(Report report);
     //List<Report> findAllByUserID(Long userID);  Ingimar commented out 23.okt
-    Report findByReportID(Long reportID);
+    Report findByReportID(long reportID);
     /* Ingimar commented out 23.okt
     void sendToUser(Report report, String userEmail);
     void sendToRecipient(Report report);

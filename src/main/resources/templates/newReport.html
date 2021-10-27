@@ -15,9 +15,11 @@
         <option id="reportTitle" th:each="reportTitle : ${T(is.hi.hbv1.Persistence.Entities.ReportTitle).values()}" th:value="${reportTitle}" th:text="${reportTitle.displayName}"></option>
     </select>
     <span th:if="${#fields.hasErrors('reportTitle')}" th:errors="*{reportTitle}"></span>
+
     <label for="reportSubject">Subject</label>
     <input type="text" th:field="*{reportSubject}" id="reportSubject" placeholder="Subject">
     <span th:if="${#fields.hasErrors('reportSubject')}" th:errors="*{reportSubject}"></span>
+
     <input type="submit" value="Send report">
 </form>
 </body>

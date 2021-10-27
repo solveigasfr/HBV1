@@ -82,8 +82,9 @@ public class ReportServiceImplementation implements ReportService {
     }
      */
 
+
     @Override
-    public Report findByReportID(Long reportID){
+    public Report findByReportID(long reportID){
         return reportRepository.findByReportID(reportID);
     }
 
