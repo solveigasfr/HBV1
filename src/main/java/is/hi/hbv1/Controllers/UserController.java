@@ -32,7 +32,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public String signupPOST(User user, BindingResult result, Model model){
+    public String signupPOST(User user, BindingResult result, Model model, HttpSession session){
         if(result.hasErrors()){
             return "redirect:/signup";
         }
@@ -40,10 +40,12 @@ public class UserController {
         if(exists == null){
             userService.save(user);
         }
-        return "redirect:/";
+        session.setAttribute("LoggedInUser", exists);
+        model.addAttribute("LoggedInUser", exists);
+        return "signupSuccesful";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String loginGET(User user){
         return "login";
     }
@@ -57,8 +59,9 @@ public class UserController {
         if(exists != null){
             session.setAttribute("LoggedInUser", exists);
             model.addAttribute("LoggedInUser", exists);
-            return "LoggedInUser";
+            return "newReport";
         }
+
         return "redirect:/";
     }
 
