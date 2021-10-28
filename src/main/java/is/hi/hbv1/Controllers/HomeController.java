@@ -20,7 +20,7 @@ public class HomeController {
         this.reportService = reportService;
     }
 
-    @RequestMapping("/")
+    @RequestMapping("/home")
     public String homePage(Model model) {
         // Call a method in a Service Class
         List<Report> allReports = reportService.findAll();

@@ -6,8 +6,14 @@
 <body>
 <h2>Signup for an account</h2>
 <form action="#" th:action="@{/signup}" th:object="${user}"  method="post">
-    <input type="text" name="username" id="username" th:field="*{username}"/>
-    <input type="text" name="password" id="password" th:value="*{password}"/>
+    <label for="userName">Username</label>
+    <input type="text" name="userName" id="userName" th:field="*{userName}"/>
+
+    <label for="userEmail">Email</label>
+    <input type="text" name="userEmail" id="userEmail" th:field="*{userEmail}"/>
+
+    <label for="userPassword">Create password</label>
+    <input type="text" name="userPassword" id="userPassword" th:value="*{userPassword}"/>
     <input type="submit" value="Sign up"/>
 </form>
 </body>
