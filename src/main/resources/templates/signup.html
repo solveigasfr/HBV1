@@ -2,19 +2,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Signup</title>
+    <link href="/css/style.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 </head>
 <body>
 <h2>Signup for an account</h2>
 <form action="#" th:action="@{/signup}" th:object="${user}"  method="post">
-    <label for="userName">Username</label>
-    <input type="text" name="userName" id="userName" th:field="*{userName}"/>
-
-    <label for="userEmail">Email</label>
-    <input type="text" name="userEmail" id="userEmail" th:field="*{userEmail}"/>
-
-    <label for="userPassword">Create password</label>
-    <input type="text" name="userPassword" id="userPassword" th:value="*{userPassword}"/>
-    <input type="submit" value="Sign up"/>
+    <div>
+        <label for="userName">Username</label>
+        <input type="text" name="userName" id="userName" th:field="*{userName}"
+               pattern="^\S+$"/>
+    </div>
+    <div>
+        <label for="userEmail">Email</label>
+        <input type="email" name="userEmail" id="userEmail" th:field="*{userEmail}"
+               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/> <!--regex to allow only one @ and one or more dots -->
+    </div>
+    <div>
+        <label for="userPassword">Create password</label>
+        <input type="password" name="userPassword" id="userPassword" th:value="*{userPassword}"
+               minlength="8" maxlength="20" pattern="^\S+$" required/> <!--regex in pattern to not allow spaces -->
+    </div>
+    <div>
+        <input type="submit" value="Sign up"/>
+    </div>
 </form>
 </body>
 </html>

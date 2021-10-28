@@ -2,14 +2,30 @@
 <head>
   <meta charset="UTF-8">
   <title>Login</title>
+  <link href="/css/style.css" type="text/css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 </head>
 <body>
 <h2>Login to your account</h2>
 <form action="#" th:action="@{/login}" th:object="${user}"  method="post">
-  <input type="text" name="userName" id="userName" th:field="*{userName}"/>
-  <input type="text" name="userPassword" id="userPassword" th:value="*{userPassword}"/>
-  <input type="submit" value="Login"/>
-  <p>Don't have an account? <a href="/signup">Sign up here</a></p>
+  <div>
+    <div>
+      <label for="userName">Username</label>
+      <input type="text" name="userName" id="userName" th:field="*{userName}"/>
+    </div>
+    <div>
+      <label for="userPassword">Username</label>
+      <input type="text" name="userPassword" id="userPassword" th:value="*{userPassword}"/>
+    </div>
+    <div>
+      <input type="submit" value="Login"/>
+    </div>
+    <div>
+      <p>Don't have an account? <a href="/signup">Sign up here</a></p>
+    </div>
+  </div>
+
+
 </form>
 </body>
 </html>
