@@ -1,31 +1,66 @@
 <html xmlns:th="https://thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Login</title>
-  <link href="/css/style.css" type="text/css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+  <link href="/css/style.css" type="text/css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"/>
 </head>
 <body>
-<h2>Login to your account</h2>
-<form action="#" th:action="@{/login}" th:object="${user}"  method="post">
-  <div>
-    <div>
-      <label for="userName">Username</label>
-      <input type="text" name="userName" id="userName" th:field="*{userName}"/>
-    </div>
-    <div>
-      <label for="userPassword">Username</label>
-      <input type="text" name="userPassword" id="userPassword" th:value="*{userPassword}"/>
-    </div>
-    <div>
-      <input type="submit" value="Login"/>
-    </div>
-    <div>
-      <p>Don't have an account? <a href="/signup">Sign up here</a></p>
+<section class="hero is-info">
+  <div class="hero-body">
+    <div class="hero-container">
+      <div>
+        <p class="title">Report System</p>
+        <p class="subtitle">Reykjavík</p>
+      </div>
+      <img class="rvkLogo" src="/img/merki-an-texta.jpg" alt="ReykjavikCitySymbol" />
     </div>
   </div>
+</section>
 
+<section class="form-container box">
+  <h2 class="is-size-3 has-text-centered has-text-weight-semibold mb-4">Login to your account</h2>
 
-</form>
+  <form action="#" th:action="@{/login}" th:object="${user}" method="post">
+    <div class="field">
+      <label class="label" for="userName">Username</label>
+      <div class="control">
+        <input
+                class="input"
+                type="text"
+                placeholder="Username"
+                name="userName"
+                id="userName"
+                th:field="*{userName}"
+        />
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label" for="userPassword">Password</label>
+      <div class="control">
+        <input
+                class="input"
+                type="password"
+                placeholder="Password"
+                name="userPassword"
+                id="userPassword"
+                th:value="*{userPassword}"
+        />
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="control">
+        <button class="button is-link">Login</button>
+      </div>
+    </div>
+
+    <div class="field">
+    <p>Don't have an account? <a href="/signup">Sign up here</a></p>
+    </div>
+
+  </form>
+</section>
 </body>
 </html>
