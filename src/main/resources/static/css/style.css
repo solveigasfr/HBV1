@@ -22,3 +22,8 @@ html, body {
 .rvkLogo {
     max-width: 100px;
 }
+
+.text-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}

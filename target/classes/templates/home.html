@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Report System</title>
-    <link href="/css/style.css" type="text/css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 </head>
 <body>
+
+<!-- home.html is only for testing and will not be part of final system -->
+
 <div th:switch="${reports}">
   <h2 th:case="null">No reports yet</h2>
   <div th:case="*">
