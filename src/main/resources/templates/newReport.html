@@ -7,21 +7,64 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 </head>
 <body>
-<h2>pls complain some more</h2>
-<form action="#" th:action="@{/createReport}" th:object="${report}" method="post">
-    <label for="reportTitle">Title</label>
-    <!--<input type="text" th:field="*{reportTitle}" id="reportTitle" placeholder="Title"> -->
+
+<section class="hero is-info">
+    <div class="hero-body">
+        <div class="hero-container">
+            <div>
+                <p class="title">Report System</p>
+                <p class="subtitle">Reykjavík</p>
+            </div>
+            <img class="rvkLogo" src="/img/merki-an-texta.jpg" alt="ReykjavikCitySymbol" />
+        </div>
+    </div>
+</section>
+
+<div class="text-container">
+    <h2 class="title is-2 has-text-centered mb-4 mt-4">Your Report</h2>
+    <p class="subtitle is-4 has-text-centered mb-4 mt-4">Send us a tip on anything! Whether it's
+        something that needs fixing, something that could be improved in the city's service or something else you want
+        to convey.</p>
+    <p class="subtitle is-5 has-text-centered mb-4 mt-4">Please note. Submissions concerning child protection shall be sent
+        directly through the electronic notification portal of child protection services</p>
+</div>
+
+<section class="form-container box">
+    <form action="#" th:action="@{/createReport}" th:object="${report}" method="post">
+
+        <div class="field">
+            <label class= "label" for="reportTitle">Title</label>
+            <div class="control">
+            <!--<input type="text" th:field="*{reportTitle}" id="reportTitle" placeholder="Title"> -->
         <!-- TODO uncomment this when enum works-->
-    <select>
-        <option id="reportTitle" th:each="reportTitle : ${T(is.hi.hbv1.Persistence.Entities.ReportTitle).values()}" th:value="${reportTitle}" th:text="${reportTitle.displayName}"></option>
-    </select>
-    <span th:if="${#fields.hasErrors('reportTitle')}" th:errors="*{reportTitle}"></span>
+                <div class="select">
+                    <select>
+                        <option id="reportTitle" th:each="reportTitle : ${T(is.hi.hbv1.Persistence.Entities.ReportTitle).values()}" th:value="${reportTitle}" th:text="${reportTitle.displayName}"></option>
+                    </select>
+                    <span th:if="${#fields.hasErrors('reportTitle')}" th:errors="*{reportTitle}"></span>
+                </div>
+            </div>
+        </div>
 
-    <label for="reportSubject">Subject</label>
-    <input type="text" th:field="*{reportSubject}" id="reportSubject" placeholder="Subject">
-    <span th:if="${#fields.hasErrors('reportSubject')}" th:errors="*{reportSubject}"></span>
+        <div class="field">
+            <label class="label" for="reportSubject">Subject</label>
+            <div class="control">
+                <input class="input" type="text" th:field="*{reportSubject}" id="reportSubject" placeholder="Subject">
+                <span th:if="${#fields.hasErrors('reportSubject')}" th:errors="*{reportSubject}"></span>
+            </div>
+        </div>
 
-    <input type="submit" value="Send report">
-</form>
+        <div class="field">
+            <div class="control">
+                <button class="button is-link" type="submit">Send Report</button>
+            </div>
+        </div>
+
+        <!--TODO implement map for user to attach location to report -->
+
+        <!--TODO implement a way for user to attach images to report -->
+
+    </form>
+</section>
 </body>
 </html>

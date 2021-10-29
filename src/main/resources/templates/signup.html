@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 </head>
 <body>
+
 <section class="hero is-info">
     <div class="hero-body">
         <div class="hero-container">
@@ -26,25 +27,25 @@
     <div class="field">
         <label class="label" for="userName">Username</label>
         <div class="control">
-        <input class="input" type="text" placeholder="Username" name="userName" id="userName" th:field="*{userName}"
+            <input class="input" type="text" placeholder="Username" name="userName" id="userName" th:field="*{userName}"
                pattern="^\S+$"/>
-    </div>
+        </div>
     </div>
 
     <div class="field">
         <label class="label" for="userEmail">Email</label>
         <div class="control">
-        <input class="input" type="email" placeholder="Email" name="userEmail" id="userEmail" th:field="*{userEmail}"
+            <input class="input" type="email" placeholder="Email" name="userEmail" id="userEmail" th:field="*{userEmail}"
                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/> <!--regex to allow only one @ and one or more dots -->
-    </div>
+        </div>
     </div>
 
     <div class="field">
         <label class="label" for="userPassword">Create password</label>
         <div class="control">
-        <input class="input" type="password" placeholder="Password" name="userPassword" id="userPassword" th:value="*{userPassword}"
+            <input class="input" type="password" placeholder="Password" name="userPassword" id="userPassword" th:value="*{userPassword}"
                minlength="8" maxlength="20" pattern="^\S+$" required/> <!--regex in pattern to not allow spaces -->
-    </div>
+        </div>
     </div>
 
     <div class="field">

@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"/>
 </head>
 <body>
+
 <section class="hero is-info">
   <div class="hero-body">
     <div class="hero-container">
@@ -25,28 +26,14 @@
     <div class="field">
       <label class="label" for="userName">Username</label>
       <div class="control">
-        <input
-                class="input"
-                type="text"
-                placeholder="Username"
-                name="userName"
-                id="userName"
-                th:field="*{userName}"
-        />
+        <input class="input" type="text" placeholder="Username" name="userName" id="userName" th:field="*{userName}"/>
       </div>
     </div>
 
     <div class="field">
       <label class="label" for="userPassword">Password</label>
       <div class="control">
-        <input
-                class="input"
-                type="password"
-                placeholder="Password"
-                name="userPassword"
-                id="userPassword"
-                th:value="*{userPassword}"
-        />
+        <input class="input" type="password" placeholder="Password" name="userPassword" id="userPassword" th:value="*{userPassword}"/>
       </div>
     </div>
 
@@ -57,7 +44,7 @@
     </div>
 
     <div class="field">
-    <p>Don't have an account? <a href="/signup">Sign up here</a></p>
+      <p>Don't have an account? <a href="/signup">Sign up here</a></p>
     </div>
 
   </form>
