@@ -34,15 +34,17 @@
 
         <div class="field">
             <label class= "label" for="reportTitle">Title</label>
-            <div class="control">
+            <!-- <div class="control"> -->
+            <div class="form-control">
             <!--<input type="text" th:field="*{reportTitle}" id="reportTitle" placeholder="Title"> -->
         <!-- TODO uncomment this when enum works-->
                 <div class="select">
-                    <select>
-                        <option id="reportTitle"
-                                th:each="reportTitle : ${T(is.hi.hbv1.Persistence.Entities.ReportTitle).values()}"
+                    <select id="reportTitle">
+                        <option th:each="reportTitle : ${T(is.hi.hbv1.Persistence.Entities.ReportTitle).values()}"
                                 th:value="${reportTitle}"
-                                th:text="${reportTitle.displayName}"></option>
+                                th:text="${reportTitle.displayName}"
+                                th:selected="${report.isSelected(lastselected)}"
+                        ></option>
                     </select>
                     <span th:if="${#fields.hasErrors('reportTitle')}" th:errors="*{reportTitle}"></span>
                 </div>

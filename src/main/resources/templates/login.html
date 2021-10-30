@@ -26,14 +26,14 @@
     <div class="field">
       <label class="label" for="userName">Username</label>
       <div class="control">
-        <input class="input" type="text" placeholder="Username" name="userName" id="userName" th:field="*{userName}"/>
+        <input class="input" type="text" placeholder="Username" name="userName" id="userName" th:field="*{userName}" required/>
       </div>
     </div>
 
     <div class="field">
       <label class="label" for="userPassword">Password</label>
       <div class="control">
-        <input class="input" type="password" placeholder="Password" name="userPassword" id="userPassword" th:value="*{userPassword}"/>
+        <input class="input" type="password" placeholder="Password" name="userPassword" id="userPassword" th:value="*{userPassword}" required/>
       </div>
     </div>
 

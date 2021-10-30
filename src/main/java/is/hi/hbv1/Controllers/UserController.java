@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public String signupPOST(User user, BindingResult result, Model model, HttpSession session){
+    public String signupPOST(User user, Report report, BindingResult result, Model model, HttpSession session){
         if(result.hasErrors()){
             //TODO add error messages so that the user will know what he did wrong
             return "redirect:/signup";
@@ -42,8 +42,10 @@ public class UserController {
         if(exists == null){
             userService.save(user);
         }
-        session.setAttribute("loggedInUser", exists);
-        model.addAttribute("loggedInUser", exists);
+        User exists1 = userService.findByUserName(user.getUserName());
+        session.setAttribute("loggedInUser", exists1);
+        model.addAttribute("loggedInUser", exists1);
+        model.addAttribute("report", report);
         return "signupSuccessful";
     }
 

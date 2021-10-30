@@ -11,11 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "reports")
 public class Report implements Serializable {
-    /* Ingimar commented out 23.okt
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY
 
-     */
     private long userID;
 
     //@Id
@@ -24,9 +20,14 @@ public class Report implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long reportID;
 
-
-
-
+    /*
+    TODO
+        -Get the Report to save more stuff than reportSubject
+            -Find a way to get reportID and userID from a saved report
+            -Find a way to save reportTitle to the report
+            -Find a way to save reportDate to the report
+        -Later: reportImages, reportLocation
+     */
 
     @NotNull
     private ReportTitle reportTitle;
@@ -54,6 +55,7 @@ public class Report implements Serializable {
 
 
 
+
     /*
     public Report(ReportTitle reportTitle, String reportSubject, LocalDate reportDate) {
         this.reportTitle = reportTitle;
@@ -61,6 +63,13 @@ public class Report implements Serializable {
         this.reportDate = reportDate;
     }
      */
+
+    public boolean isSelected(ReportTitle selectedReportTitle){
+        if (selectedReportTitle != null) {
+            return selectedReportTitle.equals(reportTitle);
+        }
+        return false;
+    }
 
 
     public long getUserID() {
