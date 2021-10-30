@@ -1,5 +1,6 @@
 package is.hi.hbv1.Controllers;
 
+import is.hi.hbv1.Persistence.Entities.Report;
 import is.hi.hbv1.Persistence.Entities.User;
 import is.hi.hbv1.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,15 +35,16 @@ public class UserController {
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String signupPOST(User user, BindingResult result, Model model, HttpSession session){
         if(result.hasErrors()){
+            //TODO add error messages so that the user will know what he did wrong
             return "redirect:/signup";
         }
         User exists = userService.findByUserName(user.getUserName());
         if(exists == null){
             userService.save(user);
         }
-        session.setAttribute("LoggedInUser", exists);
-        model.addAttribute("LoggedInUser", exists);
-        return "signupSuccesful";
+        session.setAttribute("loggedInUser", exists);
+        model.addAttribute("loggedInUser", exists);
+        return "signupSuccessful";
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -51,26 +53,31 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loginPOST(User user, BindingResult result, Model model, HttpSession session){
+    public String loginPOST(User user, Report report, BindingResult result, Model model, HttpSession session){
         if(result.hasErrors()){
+            /*TODO add error messages to show that the user either:
+               -typed wrong username
+               -typed wrong password
+            */
             return "login";
         }
         User exists = userService.logIn(user);
         if(exists != null){
-            session.setAttribute("LoggedInUser", exists);
-            model.addAttribute("LoggedInUser", exists);
-            return "newReport";
+            session.setAttribute("loggedInUser", exists);
+            model.addAttribute("loggedInUser", exists);
+            model.addAttribute("report", report);
+            return "/newReport";
         }
-
         return "redirect:/";
     }
 
     @RequestMapping(value = "/loggedin", method = RequestMethod.GET)
-    public String loggedinGET(HttpSession session, Model model){
-        User sessionUser = (User) session.getAttribute("LoggedInUser");
+    public String loggedinGET(HttpSession session, Model model, Report report){
+        User sessionUser = (User) session.getAttribute("loggedInUser");
         if(sessionUser  != null){
-            model.addAttribute("LoggedInUser", sessionUser);
-            return "loggedInUser";
+            model.addAttribute("loggedInUser", sessionUser);
+            model.addAttribute("report", report);
+            return "/newReport";
         }
         return "redirect:/";
     }

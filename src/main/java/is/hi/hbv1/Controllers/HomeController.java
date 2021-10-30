@@ -1,6 +1,7 @@
 package is.hi.hbv1.Controllers;
 
 import is.hi.hbv1.Persistence.Entities.Report;
+import is.hi.hbv1.Persistence.Entities.User;
 import is.hi.hbv1.Services.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -29,14 +31,18 @@ public class HomeController {
         return "home";
     }
 
-    @RequestMapping(value = "/createReport", method = RequestMethod.GET)
-    public String createReportGET(Report report, Model model) {
-        model.addAttribute("report", report);
-        return "newReport";
+    @RequestMapping(value = "/newReport", method = RequestMethod.GET)
+    public String newReportGET(Report report, Model model, HttpSession session) {
+        User sessionUser = (User) session.getAttribute("loggedInUser");
+        if(sessionUser  != null){
+            model.addAttribute("report", report);
+            return "/newReport";
+        }
+        return "redirect:/";
     }
 
-    @RequestMapping(value = "/createReport", method = RequestMethod.POST)
-    public String createReportPOST(Report report, BindingResult result, Model model) {
+    @RequestMapping(value = "/newReport", method = RequestMethod.POST)
+    public String newReportPOST(Report report, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "newReport";
         }

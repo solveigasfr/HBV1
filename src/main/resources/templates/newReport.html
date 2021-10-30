@@ -30,7 +30,7 @@
 </div>
 
 <section class="form-container box">
-    <form action="#" th:action="@{/createReport}" th:object="${report}" method="post">
+    <form action="#" th:action="@{/newReport}" th:object="${report}" method="post">
 
         <div class="field">
             <label class= "label" for="reportTitle">Title</label>
@@ -39,7 +39,10 @@
         <!-- TODO uncomment this when enum works-->
                 <div class="select">
                     <select>
-                        <option id="reportTitle" th:each="reportTitle : ${T(is.hi.hbv1.Persistence.Entities.ReportTitle).values()}" th:value="${reportTitle}" th:text="${reportTitle.displayName}"></option>
+                        <option id="reportTitle"
+                                th:each="reportTitle : ${T(is.hi.hbv1.Persistence.Entities.ReportTitle).values()}"
+                                th:value="${reportTitle}"
+                                th:text="${reportTitle.displayName}"></option>
                     </select>
                     <span th:if="${#fields.hasErrors('reportTitle')}" th:errors="*{reportTitle}"></span>
                 </div>

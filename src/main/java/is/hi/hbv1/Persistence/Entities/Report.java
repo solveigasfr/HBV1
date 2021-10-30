@@ -13,10 +13,10 @@ import java.util.List;
 public class Report implements Serializable {
     /* Ingimar commented out 23.okt
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long userID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY
 
      */
+    private long userID;
 
     //@Id
     //@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -41,10 +41,10 @@ public class Report implements Serializable {
     public Report() {
     }
 
-    // TODO Change String reportTitle back to ReportTitle reportTitle when enum works
-    public Report(ReportTitle reportTitle, String reportSubject,
+    public Report(long userID, ReportTitle reportTitle, String reportSubject,
                   List<Double> reportLocation, List<String> reportImages,
                   LocalDate reportDate) {
+        this.userID = userID;
         this.reportTitle = reportTitle;
         this.reportSubject = reportSubject;
         this.reportLocation = reportLocation;
@@ -62,7 +62,7 @@ public class Report implements Serializable {
     }
      */
 
-    /* Ingimar commented out 23.okt
+
     public long getUserID() {
         return userID;
     }
@@ -70,7 +70,7 @@ public class Report implements Serializable {
     public void setUserID(long userID) {
         this.userID = userID;
     }
-    */
+
 
     public long getReportID() {
         return reportID;
