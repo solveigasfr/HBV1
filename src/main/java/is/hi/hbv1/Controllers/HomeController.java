@@ -50,9 +50,8 @@ public class HomeController {
         if (result.hasErrors()) {
             return "/newReport";
         }
-        //model.addAttribute("report", report);
+        model.addAttribute("report", report);
         report.setReportDate(LocalDate.now());
-        //model.addAttribute("lastselected", reportTitle);
 
         reportService.save(report);
         //model.addAttribute("reportTitle", report.getReportTitle());

@@ -1,5 +1,7 @@
 package is.hi.hbv1.Persistence.Entities;
 
+import javax.lang.model.element.Element;
+
 public enum ReportTitle {
     TRAFFICLIGHTS("Faulty traffic lights"),
     GARBAGECAN("Full or faulty garbage can"),
@@ -13,13 +15,6 @@ public enum ReportTitle {
     ReportTitle(final String displayName) {
         this.displayName = displayName;
     }
-/*
-    @Override
-    public String toString(){
-        return displayName;
-    }
-
- */
 
     public String getDisplayName() {
         return displayName;

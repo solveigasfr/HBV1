@@ -25,7 +25,6 @@ public class Report implements Serializable {
         -Get the Report to save more stuff than reportSubject
             -Find a way to get reportID and userID from a saved report
             -Find a way to save reportTitle to the report
-            -Find a way to save reportDate to the report
         -Later: reportImages, reportLocation
      */
 
