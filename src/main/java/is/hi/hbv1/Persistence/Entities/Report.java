@@ -87,6 +87,7 @@ public class Report implements Serializable {
     public void setReportID(long reportID) {
         this.reportID = reportID;
     }
+
     public ReportTitle getReportTitle() {
         return reportTitle;
     }

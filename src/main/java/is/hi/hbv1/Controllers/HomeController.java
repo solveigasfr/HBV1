@@ -46,13 +46,14 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/newReport", method = RequestMethod.POST)
-    public String newReportPOST(Report report, BindingResult result, Model model) {
+    public String newReportPOST(Report report, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
             return "/newReport";
         }
         model.addAttribute("report", report);
         report.setReportDate(LocalDate.now());
-
+        User sessionUser = (User) session.getAttribute("loggedInUser");
+        report.setUserID(sessionUser.getUserID());
         reportService.save(report);
         //model.addAttribute("reportTitle", report.getReportTitle());
         return "confirmation";

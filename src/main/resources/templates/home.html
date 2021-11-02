@@ -21,6 +21,7 @@
                   <th>Location</th>
                   <th>Images</th>
                   <th>Date</th>
+                  <th>UserID</th>
               </tr>
           </thread>
           <tbody>
@@ -29,6 +30,7 @@
               <td th:text="${report.getReportTitleAsString()}"></td>
               <td th:text="${report.getReportSubject()}"></td>
               <td th:text="${report.getReportDate()}"></td>
+              <td th:text="${report.getUserID()}"></td>
 
               <!--<td th:text="${report.location}"></td>
               <td th:text="${report.images}"></td>
