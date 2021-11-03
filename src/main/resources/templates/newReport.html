@@ -30,22 +30,21 @@
 </div>
 
 <section class="form-container box">
-    <form action="#" th:action="@{/newReport}" th:object="${report}" method="post" enctype="multipart/form-data">
-
+    <form th:action="@{/newReport}" th:object="${report}" method="post" enctype="multipart/form-data">
         <div class="field">
             <label class= "label" for="reportTitle">Title</label>
-            <div class="control">
+            <!-- <div class="control"> -->
+
             <!--<input type="text" th:field="*{reportTitle}" id="reportTitle" placeholder="Title"> -->
-        <!-- TODO uncomment this when enum works-->
-                <div class="select">
-                    <select>
-                        <option id="reportTitle"
-                                th:each="reportTitle : ${T(is.hi.hbv1.Persistence.Entities.ReportTitle).values()}"
-                                th:value="${reportTitle}"
-                                th:text="${reportTitle.displayName}"></option>
-                    </select>
-                    <span th:if="${#fields.hasErrors('reportTitle')}" th:errors="*{reportTitle}"></span>
-                </div>
+            <!-- TODO uncomment this when enum works-->
+            <div class="select form-group">
+                <select class="form-control" id="reportTitle" th:field="*{reportTitle}">
+                    <option th:each="reportTitle : ${T(is.hi.hbv1.Persistence.Entities.ReportTitle).values()}"
+                            th:value="${reportTitle}"
+                            th:text="${reportTitle.displayName}"
+                    ></option>
+                </select>
+                <span th:if="${#fields.hasErrors('reportTitle')}" th:errors="*{reportTitle}"></span>
             </div>
         </div>
 
