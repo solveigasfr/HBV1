@@ -31,10 +31,13 @@ public class Report implements Serializable {
     @NotNull
     private ReportTitle reportTitle;
     private String reportSubject = null;
+
     @ElementCollection
     private List<Double> reportLocation = new ArrayList<>();
-    @ElementCollection
-    private List<String> reportImages = new ArrayList<>();
+
+    @Column(nullable = true, length = 64)
+    private String reportImages;
+
     //@NotNull
     private LocalDate reportDate;
 
@@ -42,7 +45,7 @@ public class Report implements Serializable {
     }
 
     public Report(long userID, ReportTitle reportTitle, String reportSubject,
-                  List<Double> reportLocation, List<String> reportImages,
+                  List<Double> reportLocation, String reportImages,
                   LocalDate reportDate) {
         this.userID = userID;
         this.reportTitle = reportTitle;
@@ -51,9 +54,6 @@ public class Report implements Serializable {
         this.reportImages = reportImages;
         this.reportDate = reportDate;
     }
-
-
-
 
     /*
     public Report(ReportTitle reportTitle, String reportSubject, LocalDate reportDate) {
@@ -116,11 +116,11 @@ public class Report implements Serializable {
         this.reportLocation = reportLocation;
     }
 
-    public List<String> getReportImages() {
+    public String getReportImages() {
         return reportImages;
     }
 
-    public void setReportImages(List<String> reportImages) {
+    public void setReportImages(String reportImages) {
         this.reportImages = reportImages;
     }
 
@@ -130,5 +130,11 @@ public class Report implements Serializable {
 
     public void setReportDate(LocalDate reportDate) {
         this.reportDate = reportDate;
+    }
+
+
+    @Transient
+    public String getReportImagesPath() {
+        return "/reportImages/" + this.reportID + "/" + this.reportImages;
     }
 }

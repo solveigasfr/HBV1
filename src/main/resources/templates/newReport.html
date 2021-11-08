@@ -30,8 +30,7 @@
 </div>
 
 <section class="form-container box">
-    <form th:action="@{/newReport}" th:object="${report}" method="post">
-
+    <form th:action="@{/newReport}" th:object="${report}" method="post" enctype="multipart/form-data">
         <div class="field">
             <label class= "label" for="reportTitle">Title</label>
             <!-- <div class="control"> -->
@@ -52,8 +51,29 @@
         <div class="field">
             <label class="label" for="reportSubject">Subject</label>
             <div class="control">
-                <input class="input" type="text" th:field="*{reportSubject}" id="reportSubject" placeholder="Subject">
+                <textarea class="textarea" type="text" th:field="*{reportSubject}" id="reportSubject" placeholder="Textarea"></textarea>
                 <span th:if="${#fields.hasErrors('reportSubject')}" th:errors="*{reportSubject}"></span>
+            </div>
+        </div>
+
+        <!--TODO implement map for user to attach location to report -->
+
+        <!--TODO implement a way for user to attach images to report -->
+        <div class="field">
+            <div class="file is-info has-name">
+                <label class="file-label">
+                    <div class="control">
+                        <input class="file-input" type="file" name="image" accept="image/*" multiple="multiple">
+                        <span class="file-cta">
+                            <span class="file-icon">
+                                <i class="fas fa-upload"></i>
+                            </span>
+                            <span class="file-label">Upload image...</span>
+                            <!-- <img th:src="@{${report.getReportImagesPath()}}" alt="image" width="300" height="200"/> -->
+                        </span>
+                        <span class="file-name">Image url here</span>
+                    </div>
+                </label>
             </div>
         </div>
 
@@ -62,10 +82,6 @@
                 <button class="button is-link" type="submit">Send Report</button>
             </div>
         </div>
-
-        <!--TODO implement map for user to attach location to report -->
-
-        <!--TODO implement a way for user to attach images to report -->
 
     </form>
 </section>
