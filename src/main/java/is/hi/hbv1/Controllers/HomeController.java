@@ -1,5 +1,6 @@
 package is.hi.hbv1.Controllers;
 
+import is.hi.hbv1.FileHelper;
 import is.hi.hbv1.Persistence.Entities.Report;
 import is.hi.hbv1.Persistence.Entities.ReportTitle;
 import is.hi.hbv1.Persistence.Entities.User;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -54,18 +56,23 @@ public class HomeController {
         if (result.hasErrors()) {
             return "/newReport";
         }
+
         model.addAttribute("report", report);
         report.setReportDate(LocalDate.now());
         User sessionUser = (User) session.getAttribute("loggedInUser");
         report.setUserID(sessionUser.getUserID());
 
-//        String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-//        report.setReportImages(filename);
-//
-//        Report savedReport = reportService.save(report);
-//        String uploadDir = "reportImages/" + savedReport.getReportID();
-//
-//        FileUploadUtil.saveFile(uploadDir,filename,multipartFile);
+        String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        report.setReportImages(filename);
+        Report savedReport = reportService.save(report);
+        String uploadDir = "uploads/reportImages/" + savedReport.getReportID();
+
+        try {
+            FileHelper.saveFile(uploadDir, filename, multipartFile);
+        } catch (IOException exception) {
+            // TODO pass some error to newReport that saving image failed
+            return "/newReport";
+        }
 
         reportService.save(report);
         //model.addAttribute("reportTitle", report.getReportTitle());

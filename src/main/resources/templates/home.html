@@ -1,11 +1,23 @@
-<!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org">
+<html xmlns:th="https://thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Report System</title>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <link href="/css/style.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"/>
 </head>
 <body>
 
+<section class="hero is-info">
+    <div class="hero-body">
+        <div class="hero-container">
+            <div>
+                <p class="title">Report System</p>
+                <p class="subtitle">Reykjavík</p>
+            </div>
+            <img class="rvkLogo" src="/img/merki-an-texta.jpg" alt="ReykjavikCitySymbol" />
+        </div>
+    </div>
+</section>
 <!-- home.html is only for testing and will not be part of final system -->
 
 <div th:switch="${reports}">
@@ -27,10 +39,13 @@
           <tbody>
           <tr th:each="report : ${reports}">
               <td th:text="${report.getReportID()}"></td>
-              <td th:text="${report.getReportTitleAsString()}"></td>
+              <!--td th:text="${report.getReportTitleAsString()}"></td>-->
               <td th:text="${report.getReportSubject()}"></td>
               <td th:text="${report.getReportDate()}"></td>
               <td th:text="${report.getUserID()}"></td>
+              <td th:text="${report.getUserID()}"></td>
+              <td><img th:src="@{${report.getReportImagesPath()}}"/></td>
+
 
               <!--<td th:text="${report.location}"></td>
               <td th:text="${report.images}"></td>

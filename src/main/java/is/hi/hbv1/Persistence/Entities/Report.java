@@ -131,4 +131,10 @@ public class Report implements Serializable {
     public void setReportDate(LocalDate reportDate) {
         this.reportDate = reportDate;
     }
+
+
+    @Transient
+    public String getReportImagesPath() {
+        return "/reportImages/" + this.reportID + "/" + this.reportImages;
+    }
 }
