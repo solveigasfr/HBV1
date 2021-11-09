@@ -78,8 +78,8 @@ public class HomeController {
 
         reportService.save(report);
         String tempEmail = sessionUser.getUserEmail();
-        
-        Email.sendEmail(tempEmail);
+        String tempTitle = report.getReportTitleAsString();
+        Email.sendEmail(tempEmail, tempTitle);
 
         //model.addAttribute("reportTitle", report.getReportTitle());
         return "confirmation";
