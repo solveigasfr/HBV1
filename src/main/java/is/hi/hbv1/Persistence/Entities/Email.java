@@ -34,8 +34,8 @@ public class Email {
         try {
             message.setFrom(new InternetAddress(myAccountEmail));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
-            message.setSubject("");
-            message.setText("");
+            message.setSubject("yo");
+            message.setText("yo");
             return message;
         } catch (MessagingException e) {
             e.printStackTrace();

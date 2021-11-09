@@ -1,6 +1,7 @@
 package is.hi.hbv1.Controllers;
 
 import is.hi.hbv1.FileHelper;
+import is.hi.hbv1.Persistence.Entities.Email;
 import is.hi.hbv1.Persistence.Entities.Report;
 import is.hi.hbv1.Persistence.Entities.ReportTitle;
 import is.hi.hbv1.Persistence.Entities.User;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -52,7 +54,7 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/newReport", method = RequestMethod.POST)
-    public String newReportPOST(Report report, BindingResult result, Model model, HttpSession session, @RequestParam("image") MultipartFile multipartFile){
+    public String newReportPOST(Report report, BindingResult result, Model model, HttpSession session, @RequestParam("image") MultipartFile multipartFile) throws MessagingException {
         if (result.hasErrors()) {
             return "/newReport";
         }
@@ -75,7 +77,10 @@ public class HomeController {
         }
 
         reportService.save(report);
-        JavaMailUtil.send
+        String tempEmail = sessionUser.getUserEmail();
+        
+        Email.sendEmail(tempEmail);
+
         //model.addAttribute("reportTitle", report.getReportTitle());
         return "confirmation";
     }
