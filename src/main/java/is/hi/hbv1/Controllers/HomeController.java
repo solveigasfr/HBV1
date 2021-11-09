@@ -75,6 +75,7 @@ public class HomeController {
         }
 
         reportService.save(report);
+        JavaMailUtil.send
         //model.addAttribute("reportTitle", report.getReportTitle());
         return "confirmation";
     }
