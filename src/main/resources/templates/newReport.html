@@ -7,6 +7,9 @@
     <link href="/css/style.css" type="text/css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <script src="/js/helper.js" type="text/javascript"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <!-- <script type="text/javascript" src="/js/map.js"></script> -->
+    <script type="text/javascript" th:src="@{//js/map.js}"></script>
 </head>
 <body>
 
@@ -62,6 +65,17 @@
 
         <!--TODO implement map for user to attach location to report -->
 
+
+        <div>
+            <div id="map"></div>
+            <script
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwQIWRzwQujJT8qGSfxXrz65ciHForm1Y&callback=initMap&v=weekly"
+                    async
+            ></script>
+        </div>
+
+
+        <!--TODO implement a way for user to attach images to report -->
         <div class="field">
             <div class="file is-info has-name">
                 <label class="file-label">
