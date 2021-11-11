@@ -45,7 +45,34 @@ public class UserController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String loginGET(User user){
+    public String homeGET(User user,Report report, HttpSession session, Model model){
+
+        // Checking if a user is already logged in before accessing the login page
+        User exists = (User) session.getAttribute("loggedInUser");
+        if(exists != null){
+            // redirect to current page if user is already logged in
+            // aka, not allowing him to go back to login page
+            model.addAttribute("report", report);
+            return "/newReport";
+        }
+        // Return login if no user is logged in
+        return "login";
+    }
+
+    // This is copy-paste from above to allow to change the URL to login
+    // This is redundant for now but might be useful in the future
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String loginGET(User user,Report report, HttpSession session, Model model){
+
+        // Checking if a user is already logged in before accessing the login page
+        User exists = (User) session.getAttribute("loggedInUser");
+        if(exists != null){
+            // redirect to current page if user is already logged in
+            // aka, not allowing him to go back to login page
+            model.addAttribute("report", report);
+            return "redirect:/newReport";
+        }
+        // Return login if no user is logged in
         return "login";
     }
 
@@ -56,7 +83,7 @@ public class UserController {
                -typed wrong username
                -typed wrong password
             */
-            return "login";
+            return "redirect:/";
         }
         User exists = userService.logIn(user);
         if(exists != null){
@@ -68,6 +95,7 @@ public class UserController {
         return "redirect:/";
     }
 
+    /*
     @RequestMapping(value = "/loggedin", method = RequestMethod.GET)
     public String loggedinGET(HttpSession session, Model model, Report report){
         User sessionUser = (User) session.getAttribute("loggedInUser");
@@ -78,6 +106,7 @@ public class UserController {
         }
         return "redirect:/";
     }
+    */
 
 //    @RequestMapping(value = "/logOut", method = RequestMethod.POST)
 //    public String logOutPOST(HttpSession session) {
