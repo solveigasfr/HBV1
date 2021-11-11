@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org">
+<html xmlns:th="http://thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://thymeleaf.org ">
 <head>
     <meta charset="UTF-8">
     <title>Create a new report</title>
     <link href="/css/style.css" type="text/css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <script src="/js/helper.js" type="text/javascript"></script>
 </head>
 <body>
 
@@ -15,7 +17,7 @@
                 <p class="title">Report System</p>
                 <p class="subtitle">Reykjavík</p>
             </div>
-            <img class="rvkLogo" src="/img/merki-an-texta.jpg" alt="ReykjavikCitySymbol" />
+            <img class="rvkLogo" src="/img/merki-an-texta.jpg" alt="ReykjavikCitySymbol"/>
         </div>
     </div>
 </section>
@@ -25,14 +27,15 @@
     <p class="subtitle is-4 has-text-centered mb-4 mt-4">Send us a tip on anything! Whether it's
         something that needs fixing, something that could be improved in the city's service or something else you want
         to convey.</p>
-    <p class="subtitle is-5 has-text-centered mb-4 mt-4">Please note. Submissions concerning child protection shall be sent
+    <p class="subtitle is-5 has-text-centered mb-4 mt-4">Please note. Submissions concerning child protection shall be
+        sent
         directly through the electronic notification portal of child protection services</p>
 </div>
 
 <section class="form-container box">
     <form th:action="@{/newReport}" th:object="${report}" method="post" enctype="multipart/form-data">
         <div class="field">
-            <label class= "label" for="reportTitle">Title</label>
+            <label class="label" for="reportTitle">Title</label>
             <!-- <div class="control"> -->
 
             <!--<input type="text" th:field="*{reportTitle}" id="reportTitle" placeholder="Title"> -->
@@ -51,27 +54,29 @@
         <div class="field">
             <label class="label" for="reportSubject">Subject</label>
             <div class="control">
-                <textarea class="textarea" type="text" th:field="*{reportSubject}" id="reportSubject" placeholder="Textarea"></textarea>
+                <textarea class="textarea" type="text" th:field="*{reportSubject}" id="reportSubject"
+                          placeholder="Textarea"></textarea>
                 <span th:if="${#fields.hasErrors('reportSubject')}" th:errors="*{reportSubject}"></span>
             </div>
         </div>
 
         <!--TODO implement map for user to attach location to report -->
 
-        <!--TODO implement a way for user to attach images to report -->
         <div class="field">
             <div class="file is-info has-name">
                 <label class="file-label">
                     <div class="control">
-                        <input class="file-input" type="file" name="image" accept="image/*" multiple="multiple">
+                        <input class="file-input" type="file" name="image" accept="image/*" multiple="multiple"
+                               onchange="previewFile()"><br>
                         <span class="file-cta">
                             <span class="file-icon">
                                 <i class="fas fa-upload"></i>
                             </span>
                             <span class="file-label">Upload image...</span>
-                            <!-- <img th:src="@{${report.getReportImagesPath()}}" alt="image" width="300" height="200"/> -->
+                            <img th:src="@{${report.getReportImagesPath()}}" id="previewImage" alt="image preview"
+                                 width="200" height="200"/>
                         </span>
-                        <span class="file-name">Image url here</span>
+                        <span class="file-name"></span>
                     </div>
                 </label>
             </div>

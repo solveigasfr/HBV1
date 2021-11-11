@@ -22,11 +22,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    //Endpoints to add
-    // signup (GET, POST)
-    // login (GET, POST)
-    // loggedin (GET)
-
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String signupGET(User user){
         return "signup";
@@ -83,5 +78,10 @@ public class UserController {
         }
         return "redirect:/";
     }
+
+//    @RequestMapping(value = "/logOut", method = RequestMethod.POST)
+//    public String logOutPOST(HttpSession session) {
+//        User sessionUser = (User) session.getAttribute("loggedInUser");
+//    }
 }
 
