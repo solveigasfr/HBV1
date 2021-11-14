@@ -3,7 +3,7 @@
       xsi:schemaLocation="http://thymeleaf.org ">
 <head>
     <meta charset="UTF-8">
-    <title>Create a new report</title>
+    <title>New report | RVK Report System</title>
     <link href="/css/style.css" type="text/css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <script src="/js/helper.js" type="text/javascript"></script>
@@ -30,21 +30,21 @@
     <p class="subtitle is-4 has-text-centered mb-4 mt-4">Send us a tip on anything! Whether it's
         something that needs fixing, something that could be improved in the city's service or something else you want
         to convey.</p>
-    <p class="subtitle is-5 has-text-centered mb-4 mt-4">Please note. Submissions concerning child protection shall be
-        sent
-        directly through the electronic notification portal of child protection services</p>
+    <p class="subtitle is-5 has-text-centered mb-4 mt-4">
+        <b>Please note!</b>
+        Submissions concerning child protection shall be sent directly through the
+        <a href="https://reykjavik.is/tilkynningar-til-barnaverndar-reykjavikur">
+            electronic notification portal of child protection services
+        </a>
+    </p>
 </div>
 
 <section class="form-container box">
     <form th:action="@{/newReport}" th:object="${report}" method="post" enctype="multipart/form-data">
         <div class="field">
-            <label class="label" for="reportTitle">Title</label>
-            <!-- <div class="control"> -->
-
-            <!--<input type="text" th:field="*{reportTitle}" id="reportTitle" placeholder="Title"> -->
-            <!-- TODO uncomment this when enum works-->
+            <label class="label" th:for="reportTitle">Title</label>
             <div class="select form-group">
-                <select class="form-control" id="reportTitle" th:field="*{reportTitle}">
+                <select class="form-control" th:id="reportTitle" th:field="*{reportTitle}">
                     <option th:each="reportTitle : ${T(is.hi.hbv1.Persistence.Entities.ReportTitle).values()}"
                             th:value="${reportTitle}"
                             th:text="${reportTitle.displayName}"
