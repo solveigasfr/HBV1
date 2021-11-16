@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Choose location | RVK Report System</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="robots" content="noindex, nofollow">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://js.sentry-cdn.com/b4e18cb1943f46289f67ca6a771bd341.min.js" crossorigin="anonymous"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-instrumentile/v3.0.0/mapbox-gl-instrumentile.js" crossorigin="anonymous"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.js"></script>
+
+    <!--
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.js"></script>
+    <link
+            href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.css"
+            rel="stylesheet"
+    />
+    -->
+    <style>
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+        #geocoder-container > div {
+            min-width: 50%;
+            margin-left: 25%;
+        }
+        #map canvas {
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Load the `mapbox-gl-geocoder` plugin. for search bar in map and marker eftir search -->
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"></script>
+<link rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css"
+      type="text/css">
+
+<div id='map'></div>
+<script>
+    // Version 1
+    // Prepare to see some javascript! I can't find a way to access this from /js/map.js
+
+    // Getting the access token from Ingimar's mapbox account.********************
+    mapboxgl.accessToken = 'pk.eyJ1IjoiMW5naW1hciIsImEiOiJja3Z6Nzk3eWUwemVxMnZsY2phdHZtdXp2In0.L1V3WRUm5' +
+        'vifm5xlES46wQ';
+    //end ************************************************************************
+
+    // Creating the map.**********************************************************
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11', //we can change the style if we want
+        center: [-21.876231161865178, 64.12097869457965], //somewhat center of RVK
+        zoom: 11
+    });
+    //end ************************************************************************
+
+    // set the bounds of the map to only surrounding neighbourhood of RVK.**********
+    const bounds = [
+        [-22.23, 64.04],
+        [-21.52, 64.20]
+    ];
+    map.setMaxBounds(bounds);
+    //end ************************************************************************
+
+    // Add the control to the map. (search bar and pinpoint marker after search)**
+    map.addControl(
+        new MapboxGeocoder({
+            accessToken: mapboxgl.accessToken,
+            //mapboxgl: mapboxgl
+            // TODO take out marker after a search is made. This is an ugly fix for that!
+            // (the ugly fix is commenting the line above the TODO line)
+        })
+    );
+    //end ************************************************************************
+
+    // Displaying a marker after a mouseclick on the map.*************************
+    var marker = new mapboxgl.Marker()
+    map.on('click', (e) => {
+        const coordinates = e.lngLat //getting the coordinates of mouse pointer
+        marker.remove(); // If there is an old marker then we remove it
+        marker = new mapboxgl.Marker({
+            draggable: true // why not?
+        })
+            .setLngLat(coordinates)
+            .addTo(map)
+    });
+    //end ************************************************************************
+
+    // Adding zoom and rotation controls to the map.******************************
+    map.addControl(new mapboxgl.NavigationControl());
+    //end ************************************************************************
+</script>
+
+</body>
+</html>

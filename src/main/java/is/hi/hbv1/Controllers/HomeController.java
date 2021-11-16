@@ -48,7 +48,7 @@ public class HomeController {
         User sessionUser = (User) session.getAttribute("loggedInUser");
         if(sessionUser  != null){
             model.addAttribute("report", report);
-            return "/newReport";
+            return "newReport";
         }
         return "redirect:/";
     }
