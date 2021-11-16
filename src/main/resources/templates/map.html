@@ -42,7 +42,7 @@
 
 <div id='map'></div>
 <script>
-    // Version 1
+    // Version 2
     // Prepare to see some javascript! I can't find a way to access this from /js/map.js
 
     // Getting the access token from Ingimar's mapbox account.********************
@@ -94,6 +94,33 @@
     // Adding zoom and rotation controls to the map.******************************
     map.addControl(new mapboxgl.NavigationControl());
     //end ************************************************************************
+/*
+    // Adding the option to let user share his location.**************************
+    map.addControl(
+        new mapboxgl.GeolocateControl({
+            positionOptions: {
+                enableHighAccuracy: true
+            },
+            // When active the map will receive updates to the device's location as it changes.
+            trackUserLocation: true,
+            // Draw an arrow next to the location dot to indicate which direction the device is heading.
+            showUserHeading: true
+        })
+    );
+    //end ************************************************************************
+
+ */
+    /*
+    map.addControl(new MapboxExportControl({
+        PageSize: Size.A3,
+        PageOrientation: PageOrientation.Portrait,
+        Format: Format.PNG,
+        DPI: DPI[96],
+        Crosshair: true,
+        PrintableArea: true
+    }), 'top-right');
+
+     */
 </script>
 
 </body>
