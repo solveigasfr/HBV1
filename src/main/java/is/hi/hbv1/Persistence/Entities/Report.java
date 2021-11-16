@@ -10,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "reports")
+// kommenta hér hvað serializable gerir
 public class Report implements Serializable {
 
     private long userID;

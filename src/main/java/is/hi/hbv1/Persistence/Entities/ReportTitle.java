@@ -1,6 +1,10 @@
 package is.hi.hbv1.Persistence.Entities;
-
 import javax.lang.model.element.Element;
+
+/* Report titles are implemented as a seperate enum class because
+   each report can only take one of the predefined reportTitle values.
+   Using enums will ease the implementation of further categories later on.
+ */
 
 public enum ReportTitle {
     TRAFFICLIGHTS("Faulty traffic lights"),
@@ -10,7 +14,6 @@ public enum ReportTitle {
     OTHER("Other");
 
     private final String displayName;
-
 
     ReportTitle(final String displayName) {
         this.displayName = displayName;
