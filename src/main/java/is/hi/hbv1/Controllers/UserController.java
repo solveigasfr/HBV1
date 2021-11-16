@@ -97,7 +97,6 @@ public class UserController {
         return "redirect:/";
     }
 
-    /*
     @RequestMapping(value = "/loggedin", method = RequestMethod.GET)
     public String loggedinGET(HttpSession session, Model model, Report report){
         User sessionUser = (User) session.getAttribute("loggedInUser");
@@ -110,18 +109,24 @@ public class UserController {
     }
 
     // Log user out of account
-    @RequestMapping(value = "/logOut", method = RequestMethod.POST)
-    public String logOutPOST(HttpSession session) {
+    @RequestMapping(value = "/logOut", method = RequestMethod.GET)
+    public String logOutGET(HttpSession session) {
         session.setAttribute("loggedInUser", null);
         return "redirect:/";
     }
 
     // Change user password
     @RequestMapping(value = "/changePassword", method = RequestMethod.GET)
-    public String changePasswordGET(User user){
-        return "changePassword";
+    public String changePasswordGET(HttpSession session, Model model){
+        User sessionUser = (User) session.getAttribute("loggedInUser");
+        if(sessionUser  != null){
+            model.addAttribute("loggedInUser", sessionUser);
+            return "/changePassword";
+        }
+        return "redirect:/";
     }
 
+    /*
     @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
     public String changePasswordPOST(HttpSession session, Model model,
                                      @RequestParam String oldPassword,
@@ -132,6 +137,7 @@ public class UserController {
 
         return "login";
     }
+     */
 
     // Delete user account
 
