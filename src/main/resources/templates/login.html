@@ -22,7 +22,7 @@
 <section class="form-container box">
   <h2 class="is-size-3 has-text-centered has-text-weight-semibold mb-4">Login to your account</h2>
 
-  <form action="#" th:action="@{/login}" th:object="${user}" method="post">
+  <form action="#" th:action="@{/logIn}" th:object="${user}" method="post">
     <div class="field">
       <label class="label" for="userName">Username</label>
       <div class="control">
@@ -44,7 +44,7 @@
     </div>
 
     <div class="field">
-      <p>Don't have an account? <a href="/signup">Sign up here</a></p>
+      <p>Don't have an account? <a href="/signUp">Sign up here</a></p>
     </div>
 
   </form>
