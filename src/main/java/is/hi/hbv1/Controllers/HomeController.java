@@ -85,4 +85,9 @@ public class HomeController {
         //model.addAttribute("reportTitle", report.getReportTitle());
         return "confirmation";
     }
+
+    @RequestMapping(value = "/getMap", method = RequestMethod.GET)
+    public String mapGET() {
+        return "map";
+    }
 }
