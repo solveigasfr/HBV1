@@ -108,7 +108,6 @@ public class UserController {
         }
         return "redirect:/";
     }
-    */
 
     // Log user out of account
     @RequestMapping(value = "/logOut", method = RequestMethod.POST)
@@ -135,9 +134,6 @@ public class UserController {
     }
 
     // Delete user account
-
-
-
 
 }
 
