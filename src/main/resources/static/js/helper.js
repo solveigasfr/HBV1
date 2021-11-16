@@ -1,7 +1,9 @@
+// Preview added images before user submits report
 function previewFiles() {
-
     var preview = document.querySelector('#preview');
     var files   = document.querySelector('input[type=file]').files;
+
+    console.log(preview);
 
     function readAndPreview(file) {
 
@@ -11,7 +13,8 @@ function previewFiles() {
 
             reader.addEventListener("load", function () {
                 var image = new Image();
-                image.height = 100;
+                image.height = 150;
+                image.width = 150;
                 image.title = file.name;
                 image.src = this.result;
                 preview.appendChild( image );
@@ -27,3 +30,11 @@ function previewFiles() {
     }
 
 }
+
+// Make My account dropdown menu in banner dynamic
+var dropdown = document.querySelector('.dropdown');
+dropdown.addEventListener('click', function(event) {
+    event.stopPropagation();
+    dropdown.classList.toggle('is-active');
+});
+

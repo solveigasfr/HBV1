@@ -76,7 +76,7 @@
                 <label class="file-label">
                     <div class="control">
                         <input id="browse" class="file-input" type="file" name="image" accept="image/*" multiple="multiple"
-                               onchange="previewFile()"><br>
+                               onchange="previewFiles()"><br>
                         <div id="preview"></div>
                         <span class="file-cta">
                             <span class="file-icon">
@@ -84,7 +84,7 @@
                             </span>
                             <span class="file-label">Upload image...</span>
                         </span>
-                        <img th:src="@{${report.getReportImagesPath()}}" id="previewImage" alt="image preview" height="200" width="200"/>
+                        <img th:src="@{${report.getReportImagesPath()}}" id="previewImage" alt="image preview"/>
                     </div>
                 </label>
             </div>
