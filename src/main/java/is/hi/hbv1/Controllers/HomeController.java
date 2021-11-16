@@ -43,7 +43,7 @@ public class HomeController {
         return "home";
     }
 
-    @RequestMapping(value = "/newReport", method = RequestMethod.GET)
+    @RequestMapping(value = "/createReport", method = RequestMethod.GET)
     public String newReportGET(Report report, Model model, HttpSession session) {
         User sessionUser = (User) session.getAttribute("loggedInUser");
         if(sessionUser  != null){
@@ -53,10 +53,10 @@ public class HomeController {
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/newReport", method = RequestMethod.POST)
+    @RequestMapping(value = "/createReport", method = RequestMethod.POST)
     public String newReportPOST(Report report, BindingResult result, Model model, HttpSession session, @RequestParam("image") MultipartFile multipartFile) throws MessagingException {
         if (result.hasErrors()) {
-            return "/newReport";
+            return "newReport";
         }
 
         model.addAttribute("report", report);
@@ -84,5 +84,10 @@ public class HomeController {
 
         //model.addAttribute("reportTitle", report.getReportTitle());
         return "confirmation";
+    }
+
+    @RequestMapping(value = "/getMap", method = RequestMethod.GET)
+    public String mapGET() {
+        return "map";
     }
 }

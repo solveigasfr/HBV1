@@ -54,37 +54,40 @@
 </section>
 
 <div th:switch="${reports}">
-    <h2 th:case="null">No reports yet</h2>
-    <div th:case="*">
-        <h2>Reports</h2>
-        <table>
-            <thread>
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Subject</th>
-                    <th>Location</th>
-                    <th>Images</th>
-                    <th>Date</th>
-                    <th>UserID</th>
-                </tr>
-            </thread>
-            <tbody>
-            <tr th:each="report : ${reports}">
-                <td th:text="${report.getReportID()}"></td>
-                <!--td th:text="${report.getReportTitleAsString()}"></td>-->
-                <td th:text="${report.getReportSubject()}"></td>
-                <td th:text="${report.getReportDate()}"></td>
-                <td th:text="${report.getUserID()}"></td>
-                <td th:text="${report.getUserID()}"></td>
-                <td><img th:src="@{${report.getReportImagesPath()}}"/></td>
-                <!--<td th:text="${report.location}"></td>
-                <td th:text="${report.date}"></td>-->
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <p><a href="/newReport">Add a new report</a></p>
+  <h2 th:case="null">No reports yet</h2>
+  <div th:case="*">
+      <h2>Reports</h2>
+      <table>
+          <thread>
+              <tr>
+                  <th>ID</th>
+                  <th>Title</th>
+                  <th>Subject</th>
+                  <th>Location</th>
+                  <th>Images</th>
+                  <th>Date</th>
+                  <th>UserID</th>
+              </tr>
+          </thread>
+          <tbody>
+          <tr th:each="report : ${reports}">
+              <td th:text="${report.getReportID()}"></td>
+              <!--td th:text="${report.getReportTitleAsString()}"></td>-->
+              <td th:text="${report.getReportSubject()}"></td>
+              <td th:text="${report.getReportDate()}"></td>
+              <td th:text="${report.getUserID()}"></td>
+              <td th:text="${report.getUserID()}"></td>
+              <td><img th:src="@{${report.getReportImagesPath()}}"/></td>
+
+
+              <!--<td th:text="${report.location}"></td>
+              <td th:text="${report.images}"></td>
+              <td th:text="${report.date}"></td>-->
+          </tr>
+          </tbody>
+      </table>
+  </div>
+  <p><a href="/createReport">Add a new report</a></p>
 </div>
 
 </body>
