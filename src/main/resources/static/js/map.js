@@ -1,3 +1,4 @@
+// ATTENTION: map.js is currently not used------------------------------
 function initMap() {
 // Version 1
 // Prepare to see some javascript! I can't find a way to access this from /js/map.js

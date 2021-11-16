@@ -22,12 +22,12 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/signup", method = RequestMethod.GET)
+    @RequestMapping(value = "/signUp", method = RequestMethod.GET)
     public String signupGET(User user){
         return "signup";
     }
 
-    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    @RequestMapping(value = "/signUp", method = RequestMethod.POST)
     public String signupPOST(User user, Report report, BindingResult result, Model model, HttpSession session){
         if(result.hasErrors()){
             //TODO add error messages so that the user will know what he did wrong
@@ -53,15 +53,15 @@ public class UserController {
             // redirect to current page if user is already logged in
             // aka, not allowing him to go back to login page
             model.addAttribute("report", report);
-            return "/newReport";
+            return "newReport";
         }
         // Return login if no user is logged in
         return "login";
     }
 
     // This is copy-paste from above to allow to change the URL to login
-    // This is redundant for now but might be useful in the future
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    // This is to refresh the newReport page
+    @RequestMapping(value = "/logIn", method = RequestMethod.GET)
     public String loginGET(User user,Report report, HttpSession session, Model model){
 
         // Checking if a user is already logged in before accessing the login page
@@ -70,13 +70,13 @@ public class UserController {
             // redirect to current page if user is already logged in
             // aka, not allowing him to go back to login page
             model.addAttribute("report", report);
-            return "redirect:/newReport";
+            return "newReport";
         }
         // Return login if no user is logged in
         return "login";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/logIn", method = RequestMethod.POST)
     public String loginPOST(User user, Report report, BindingResult result, Model model, HttpSession session){
         if(result.hasErrors()){
             /*TODO add error messages to show that the user either:
@@ -90,7 +90,7 @@ public class UserController {
             session.setAttribute("loggedInUser", exists);
             model.addAttribute("loggedInUser", exists);
             model.addAttribute("report", report);
-            return "/newReport";
+            return "newReport";
         }
         return "redirect:/";
     }
