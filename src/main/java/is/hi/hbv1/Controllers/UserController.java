@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 
@@ -44,6 +45,7 @@ public class UserController {
         return "signupSuccessful";
     }
 
+    // Homepage
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String homeGET(User user,Report report, HttpSession session, Model model){
 
@@ -106,11 +108,32 @@ public class UserController {
         }
         return "redirect:/";
     }
-    */
 
-//    @RequestMapping(value = "/logOut", method = RequestMethod.POST)
-//    public String logOutPOST(HttpSession session) {
-//        User sessionUser = (User) session.getAttribute("loggedInUser");
-//    }
+    // Log user out of account
+    @RequestMapping(value = "/logOut", method = RequestMethod.POST)
+    public String logOutPOST(HttpSession session) {
+        session.setAttribute("loggedInUser", null);
+        return "redirect:/";
+    }
+
+    // Change user password
+    @RequestMapping(value = "/changePassword", method = RequestMethod.GET)
+    public String changePasswordGET(User user){
+        return "changePassword";
+    }
+
+    @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+    public String changePasswordPOST(HttpSession session, Model model,
+                                     @RequestParam String oldPassword,
+                                     @RequestParam String newPassword){
+        // Get logged in user
+        User loggedIn = (User)session.getAttribute("LoggedInUser");
+
+
+        return "login";
+    }
+
+    // Delete user account
+
 }
 

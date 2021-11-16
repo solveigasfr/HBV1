@@ -1,14 +1,29 @@
-function previewFile() {
-    const preview = document.getElementById('previewImage');
-    const file = document.querySelector('input[type=file]').files[0];
-    const reader = new FileReader();
+function previewFiles() {
 
-    reader.addEventListener("load", function () {
-        // convert image file to base64 string
-        preview.src = reader.result;
-    }, false);
+    var preview = document.querySelector('#preview');
+    var files   = document.querySelector('input[type=file]').files;
 
-    if (file) {
-        reader.readAsDataURL(file);
+    function readAndPreview(file) {
+
+        // Make sure `file.name` matches our extensions criteria
+        if ( /\.(jpe?g|png|gif)$/i.test(file.name) ) {
+            var reader = new FileReader();
+
+            reader.addEventListener("load", function () {
+                var image = new Image();
+                image.height = 100;
+                image.title = file.name;
+                image.src = this.result;
+                preview.appendChild( image );
+            }, false);
+
+            reader.readAsDataURL(file);
+        }
+
     }
+
+    if (files) {
+        [].forEach.call(files, readAndPreview);
+    }
+
 }

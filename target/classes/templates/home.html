@@ -13,21 +13,25 @@
     <div class="hero-head">
         <nav class="navbar">
         <div class="container">
-            <div class="navbar-brand">
-                <a class="navbar-item">
-                    <img class="rvkLogo" src="/img/merki-an-texta.jpg" alt="ReykjavikCitySymbol" />
-                </a>
-            </div>
             <div id="navbarMenuHeroB" class="navbar-menu">
                 <div class="navbar-end">
                     <span class="navbar-item">
-                        <div class="select is-info">
-                            <select>
-                                <option>My account</option>
-                                <a href="/logOut">Log out</a>
-                                <a href="changePassword">Change Password</a>
-                                <a href="/deleteUser">Delete account</a>
-                            </select>
+                        <div class="dropdown is-active">
+                            <div class="dropdown-trigger">
+                                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                                    <span>My account</span>
+                                    <span class="icon is-small">
+                                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                    </span>
+                                </button>
+                            </div>
+                             <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                 <div class="dropdown-content">
+                                     <a href="/logOut" class="dropdown-item">Log out</a>
+                                     <a href="/changePassword" class="dropdown-item">Change Password</a>
+                                     <a href="/deleteUser" class="dropdown-item">Delete account</a>
+                                 </div>
+                             </div>
                         </div>
                     </span>
                 </div>
@@ -35,6 +39,9 @@
         </div>
         </nav>
     </div>
+
+    <div class="hero-body">
+        <img class="rvkLogo" src="/img/merki-an-texta.jpg" alt="ReykjavikCitySymbol" />
     <div class="hero-body">
         <div class="container has-text-centered">
             <p class="title">Report System</p>
@@ -42,7 +49,6 @@
         </div>
     </div>
 </section>
-
 
 <div th:switch="${reports}">
   <h2 th:case="null">No reports yet</h2>
