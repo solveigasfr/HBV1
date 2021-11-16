@@ -71,22 +71,20 @@
         </div>
 
         <!-- Image stuff -->
-        <!--TODO implement a way for user to attach images to report -->
         <div class="field">
             <div class="file is-info has-name">
                 <label class="file-label">
                     <div class="control">
-                        <input class="file-input" type="file" name="image" accept="image/*" multiple="multiple"
+                        <input id="browse" class="file-input" type="file" name="image" accept="image/*" multiple="multiple"
                                onchange="previewFile()"><br>
+                        <div id="preview"></div>
                         <span class="file-cta">
                             <span class="file-icon">
                                 <i class="fas fa-upload"></i>
                             </span>
                             <span class="file-label">Upload image...</span>
-                            <img th:src="@{${report.getReportImagesPath()}}" id="previewImage" alt="image preview"
-                                 width="200" height="200"/>
                         </span>
-                        <span class="file-name"></span>
+                        <img th:src="@{${report.getReportImagesPath()}}" id="previewImage" alt="image preview" height="200" width="200"/>
                     </div>
                 </label>
             </div>
