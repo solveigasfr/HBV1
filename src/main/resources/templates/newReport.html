@@ -7,6 +7,7 @@
     <link href="/css/style.css" type="text/css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <script src="/js/helper.js" type="text/javascript"></script>
+    <!--script src="/js/coordinateSaver.js" type="text/javascript"></script-->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 </head>
 <body>
@@ -39,7 +40,7 @@
 
 <section class="form-container box">
     <form th:action="@{/createReport}" th:object="${report}" method="post" enctype="multipart/form-data">
-       <!-- Title stuff -->
+        <!-- Title stuff -->
         <div class="field">
             <label class="label" th:for="reportTitle">Title</label>
             <div class="select form-group">
@@ -65,9 +66,13 @@
 
         <!-- Map stuff -->
         <div class="field">
-            <label class="label">Location</label>
-            <p class="subtitle is-5 has-text-centered mb-5 mt-5">Please choose a location for the report</p>
-            <iframe height="400" width="100%" src="getMap" title="map" loading="lazy"></iframe>
+            <label class="label">Location implementation</label>
+            <input type="hidden" th:value="${reportLocation}" name="reportLocation" id="reportLocation">
+            <p class="subtitle is-5 has-text-centered mb-4 mt-4">Please choose a location for the report</p>
+            <div>
+                <iframe id="map" src="/getMap" title="map" height="400" width="100%" loading="lazy"></iframe>
+                <span th:if="${#fields.hasErrors('reportLocation')}" th:errors="*{reportLocation}"></span>
+            </div>
         </div>
 
         <!-- Image stuff -->
@@ -75,7 +80,8 @@
             <div class="file is-info has-name">
                 <label class="file-label">
                     <div class="control">
-                        <input id="browse" class="file-input" type="file" name="image" accept="image/*" multiple="multiple"
+                        <input id="browse" class="file-input" type="file" name="image" accept="image/*"
+                               multiple="multiple"
                                onchange="previewFile()"><br>
                         <div id="preview"></div>
                         <span class="file-cta">
@@ -84,7 +90,8 @@
                             </span>
                             <span class="file-label">Upload image...</span>
                         </span>
-                        <img th:src="@{${report.getReportImagesPath()}}" id="previewImage" alt="image preview" height="200" width="200"/>
+                        <img th:src="@{${report.getReportImagesPath()}}" id="previewImage" alt="image preview"
+                             height="200" width="200"/>
                     </div>
                 </label>
             </div>
@@ -93,6 +100,7 @@
         <div class="field">
             <div class="control">
                 <button class="button is-link" type="submit">Send Report</button>
+                <!-- onclick="saveLocation()" -->
             </div>
         </div>
 
