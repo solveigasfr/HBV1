@@ -80,7 +80,8 @@ public class HomeController {
         String tempEmail = sessionUser.getUserEmail();
         String tempTitle = report.getReportTitleAsString();
         String tempSubject = report.getReportSubject();
-        Email.sendEmail(tempEmail, tempTitle, tempSubject);
+        String tempLocation = report.getReportLocation().toString();
+        Email.sendEmail(tempEmail, tempTitle, tempSubject, tempLocation);
 
         //model.addAttribute("reportTitle", report.getReportTitle());
         return "confirmation";

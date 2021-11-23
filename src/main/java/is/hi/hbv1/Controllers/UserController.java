@@ -168,8 +168,6 @@ public class UserController {
         return "newReport";
     }
 
-     */
-
     // Delete user account
     @RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
     public String deleteUserGET(HttpSession session, Model model) {
