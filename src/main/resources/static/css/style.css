@@ -10,7 +10,10 @@ html, body {
 .hero-container {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+}
+
+.container {
+    max-width: 1000px;
 }
 
 .form-container {
@@ -19,7 +22,7 @@ html, body {
     padding: 1rem;
 }
 
-.rvkLogo {
+.rvk-logo {
     max-width: 100px;
 }
 
