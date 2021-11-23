@@ -5,19 +5,31 @@
     <title>Report Confirmed</title>
     <link href="/css/style.css" type="text/css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <script src="/js/helper.js" type="text/javascript"></script>
 </head>
 <body>
 
-<header th:insert="loggedInHeader.html :: loggedInHeader"> </header>
+<header th:insert="loggedInHeader.html :: loggedInHeader"></header>
 
 <section class="form-container box">
-    <h2 class="is-size-3 has-text-centered has-text-weight-semibold mb-4 mt-4">
-        Your account has been successfully deleted.
-    </h2>
+    <h2 class="is-size-3 has-text-centered has-text-weight-semibold mb-4 mt-4">Delete your account</h2>
 
-    <div class="field">
-        <p>Click <a href="/signup">here</a> to create a new account</p>
-    </div>
+    <form th:action="@{/deleteUser}" th:object="${user}" method="post">
+
+        <div class="field">
+            <label class="label">Please insert your password</label>
+            <div class="control">
+                <input class="input" type="password" id="password " field="*{password}" placeholder="Password" required>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <button class="button is-link" type="submit">Delete account</button>
+            </div>
+        </div>
+
+    </form>
 </section>
 </body>
 </html>
