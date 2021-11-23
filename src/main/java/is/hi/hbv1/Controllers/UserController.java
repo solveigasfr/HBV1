@@ -137,7 +137,8 @@ public class UserController {
     @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
     public String changePasswordPOST(HttpSession session, Model model,
                                      @RequestParam String oldPassword,
-                                     @RequestParam String newPassword) {
+                                     @RequestParam String newPassword,
+                                     @RequestParam String confirmPassword) {
         User loggedIn = (User) session.getAttribute("LoggedInUser");
 
         // Hash current user password
@@ -145,8 +146,16 @@ public class UserController {
 
         // Check if the old password given is correct
         if (!loggedIn.getUserPassword().equals(oldPassword)) {
-            // TODO display error message
-            return "/changePassword";
+            String errorMessageOld = "Old password given is not correct";
+            model.addAttribute(errorMessageOld);
+            return "changePassword";
+        }
+
+        // Check if new password and confirmed password match
+        if (!newPassword.equals(confirmPassword)) {
+            String errorMessageNew = "New password and confirm password do not match";
+            model.addAttribute(errorMessageNew);
+            return "changePassword";
         }
 
         // Change user password to given new password
@@ -156,10 +165,28 @@ public class UserController {
 
         //Update user in current session
         session.setAttribute("LoggedInUser", loggedIn);
-        return "/newReport";
+        return "newReport";
     }
 
     // Delete user account
+    @RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
+    public String deleteUserGET(HttpSession session, Model model) {
+        // Check if user is already logged in before accessing the delete account page
+        User exists = (User) session.getAttribute("loggedInUser");
+        if (exists != null) {
+            model.addAttribute("loggedInUser", exists);
+            return "/deleteUser";
+        }
+        // Return login if no user is logged in
+        return "login";
+    }
 
+    @RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
+    public String deleteUserPOST(HttpSession session, Model model,
+                                 @RequestParam String password) {
+        User loggedIn = (User) session.getAttribute("LoggedInUser");
+
+        return "/deleteConfirmation";
+    }
 }
 
