@@ -159,8 +159,6 @@ public class UserController {
         return "/newReport";
     }
 
-     */
-
     // Delete user account
 
 }

@@ -73,7 +73,7 @@
     var marker = new mapboxgl.Marker()
     map.on('click', (e) => {
         const coordinates = e.lngLat; //getting the coordinates of mouse pointer
-        const coor = [coordinates["lng"], coordinates["lat"]].join(",")
+        const coor = [coordinates["lat"], coordinates["lng"]].join(",")
         parent.document.getElementById("reportLocation").value = coor;
         marker.remove(); // If there is an old marker then we remove it
         marker = new mapboxgl.Marker({

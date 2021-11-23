@@ -6,7 +6,7 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class Email {
-    public static void sendEmail(String recipient, String title, String subject) throws MessagingException {
+    public static void sendEmail(String recipient, String title, String subject, String location) throws MessagingException {
         Properties properties = new Properties();
 
         properties.put("mail.smtp.auth", "true");
@@ -24,18 +24,19 @@ public class Email {
             }
         });
 
-        Message message = prepareMessage(session, myAccountEmail, recipient, title, subject);
+        Message message = prepareMessage(session, myAccountEmail, recipient, title, subject, location);
 
         Transport.send(message);
     }
 
-    private static Message prepareMessage(Session session, String myAccountEmail, String recipient, String title, String subject){
+    private static Message prepareMessage(Session session, String myAccountEmail, String recipient,
+                                          String title, String subject, String location){
         Message message = new MimeMessage(session);
         try {
             message.setFrom(new InternetAddress(myAccountEmail));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
             message.setSubject(title);
-            message.setText(subject);
+            message.setText(subject + "\n \n Location coordinates: " + location);
             return message;
         } catch (MessagingException e) {
             e.printStackTrace();
