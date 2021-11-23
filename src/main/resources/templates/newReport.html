@@ -11,17 +11,7 @@
 </head>
 <body>
 
-<section class="hero is-info">
-    <div class="hero-body">
-        <div class="hero-container">
-            <div>
-                <p class="title">Report System</p>
-                <p class="subtitle">Reykjavík</p>
-            </div>
-            <img class="rvkLogo" src="/img/merki-an-texta.jpg" alt="ReykjavikCitySymbol"/>
-        </div>
-    </div>
-</section>
+<header th:insert="loggedInHeader.html :: loggedInHeader"> </header>
 
 <div class="text-container">
     <h2 class="title is-2 has-text-centered mb-4 mt-4">Your Report</h2>
@@ -84,7 +74,6 @@
                             </span>
                             <span class="file-label">Upload image...</span>
                         </span>
-                        <img th:src="@{${report.getReportImagesPath()}}" id="previewImage" alt="image preview"/>
                     </div>
                 </label>
             </div>
