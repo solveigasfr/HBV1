@@ -10,5 +10,6 @@ public interface UserService {
     User logIn(User user);
     User findByUserName(String userName);
     List<User> findAll();
-
+    String get_SHA_512(String passwordToHash);
+    User changePassword(User user, String password);
 }
