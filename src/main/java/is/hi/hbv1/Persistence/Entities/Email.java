@@ -29,13 +29,18 @@ public class Email {
             }
         });
 
-        Message message = prepareMessage(session, myAccountEmail, recipient, title, subject, location, image);
-
+        MimeMessage message;
+        if (image != null) {
+            message = prepareMessageWithImage(session, myAccountEmail, recipient, title, subject, location, image);
+        }
+        else {
+            message = prepareMessageWithoutImage(session, myAccountEmail, recipient, title, subject, location);
+        }
         Transport.send(message);
     }
 
     // message with image
-    private static MimeMessage prepareMessage(Session session, String myAccountEmail, String recipient,
+    private static MimeMessage prepareMessageWithImage(Session session, String myAccountEmail, String recipient,
                                           String title, String subject, String location, String image){
         MimeMessage message = new MimeMessage(session);
         try {
@@ -59,7 +64,8 @@ public class Email {
             // second part (the image)
             messageBodyPart = new MimeBodyPart();
             DataSource fds = new FileDataSource
-                ("C:\\app_projects\\HBV1\\uploads\\" + image); //has to be hardcoded now but will change when implemented online
+                    (image);
+                //("C:\\app_projects\\HBV1\\" + image); //has to be hardcoded now but will change when implemented online
             messageBodyPart.setDataHandler(new DataHandler(fds));
             messageBodyPart.setHeader("Content-ID","<image>");
 
@@ -71,27 +77,37 @@ public class Email {
 
             //
             return message;
-            // þetta var message.setText
-           /* þetta test virkaði en ekki með okkar mynd
-            message.setContent(
-                    "<h1>This is a test</h1>"
-                    + "<p>" + subject + "</p>"
-                    + "<p> Location coordinates: " + location + "</p>"
-                    + "<img src=\"http://www.rgagnon.com/images/jht.gif\">",
-                    "text/html");
-            */
-            /* þetta test virkaði en sýndi ekki myndina okkar rétt
-            message.setContent(
-                    "<h1>This is a test</h1>"
-                            + "<p>" + subject + "</p>"
-                            + "<p> Location coordinates: " + location + "</p>"
-                            + "<img src=\"" + image + "\">",
-                    "text/html");
-            return message;
-             */
         } catch (MessagingException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    // message without an image
+    private static MimeMessage prepareMessageWithoutImage(Session session, String myAccountEmail, String recipient,
+                                                       String title, String subject, String location){
+        MimeMessage message = new MimeMessage(session);
+        try {
+            message.setFrom(new InternetAddress(myAccountEmail));
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+            message.setSubject(title);
+
+            MimeMultipart multipart = new MimeMultipart("related");
+
+            // first part  (the html)
+            BodyPart messageBodyPart = new MimeBodyPart();
+            String htmlText = "<H1>Report - RVK Report System</H1>"
+                    + "<p>" + subject + "</p>"
+                    + "<p> Location coordinates: " + location + "</p>";
+            messageBodyPart.setContent(htmlText, "text/html;charset=utf-8");
+
+            // add it
+            multipart.addBodyPart(messageBodyPart);
+            message.setContent(multipart);
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        return message;
     }
 }
