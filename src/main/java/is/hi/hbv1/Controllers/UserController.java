@@ -111,7 +111,7 @@ public class UserController {
     // Log user out of account
     @RequestMapping(value = "/logOut", method = RequestMethod.GET)
     public String logOutGET(User user, HttpSession session) {
-        // Check if user is already logged in before accessing the logout page
+        // Check if user is already logged in before login out user
         User exists = (User) session.getAttribute("loggedInUser");
         if (exists != null) {
             session.setAttribute("loggedInUser", null);
@@ -125,9 +125,9 @@ public class UserController {
     @RequestMapping(value = "/changePassword", method = RequestMethod.GET)
     public String changePasswordGET(HttpSession session, Model model) {
         // Check if user is already logged in before accessing the change password page
-        User exists = (User) session.getAttribute("loggedInUser");
-        if (exists != null) {
-            model.addAttribute("loggedInUser", exists);
+        User sessionUser = (User) session.getAttribute("loggedInUser");
+        if (sessionUser != null) {
+            model.addAttribute("loggedInUser", sessionUser);
             return "/changePassword";
         }
         // Return login if no user is logged in
@@ -135,37 +135,40 @@ public class UserController {
     }
 
     @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
-    public String changePasswordPOST(HttpSession session, Model model,
+    public String changePasswordPOST(HttpSession session, Report report, Model model,
                                      @RequestParam String oldPassword,
                                      @RequestParam String newPassword,
                                      @RequestParam String confirmPassword) {
-        User loggedIn = (User) session.getAttribute("LoggedInUser");
+          User sessionUser = (User) session.getAttribute("loggedInUser");
+          if(sessionUser!= null) {
 
-        // Hash current user password
-        oldPassword = userService.get_SHA_512(oldPassword);
+//              // Hash current user password
+//              var oldPasswordHashed = userService.get_SHA_512(oldPassword);
 
-        // Check if the old password given is correct
-        if (!loggedIn.getUserPassword().equals(oldPassword)) {
-            String errorMessageOld = "Old password given is not correct";
-            model.addAttribute(errorMessageOld);
-            return "changePassword";
-        }
+              // Check if the old password given is correct
+              if (!sessionUser.getUserPassword().equals(oldPassword)) {
+                  String errorMessageOld = "Old password given is not correct";
+                  model.addAttribute(errorMessageOld);
+                  return "changePassword";
+              }
 
-        // Check if new password and confirmed password match
-        if (!newPassword.equals(confirmPassword)) {
-            String errorMessageNew = "New password and confirm password do not match";
-            model.addAttribute(errorMessageNew);
-            return "changePassword";
-        }
+              // Check if new password and confirmed password match
+              if (!newPassword.equals(confirmPassword)) {
+                  String errorMessageNew = "New password and confirm password do not match";
+                  model.addAttribute(errorMessageNew);
+                  return "changePassword";
+              }
 
-        // Change user password to given new password
-        newPassword = userService.get_SHA_512(newPassword);
-        loggedIn.setUserPassword(newPassword);
-        loggedIn = userService.changePassword(loggedIn, newPassword);
+              // Change user password to given new password
+              sessionUser = userService.changePassword(sessionUser, newPassword);
 
-        //Update user in current session
-        session.setAttribute("LoggedInUser", loggedIn);
-        return "newReport";
+              //Update user in current session
+              session.setAttribute("loggedInUser", sessionUser);
+              model.addAttribute("report", report);
+              return "newReport";
+          }
+        // Return login if no user is logged in
+        return "login";
     }
 
     // Delete user account
@@ -184,7 +187,7 @@ public class UserController {
     @RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
     public String deleteUserPOST(HttpSession session, Model model,
                                  @RequestParam String password) {
-        User loggedIn = (User) session.getAttribute("LoggedInUser");
+        User loggedIn = (User) session.getAttribute("loggedInUser");
 
         return "/deleteConfirmation";
     }
