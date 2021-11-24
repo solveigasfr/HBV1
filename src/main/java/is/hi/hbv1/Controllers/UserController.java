@@ -185,7 +185,9 @@ public class UserController {
     public String deleteUserPOST(HttpSession session, Model model,
                                  @RequestParam String password) {
         User loggedIn = (User) session.getAttribute("LoggedInUser");
+        if (loggedIn != null) {
 
+        }
         return "/deleteConfirmation";
     }
 }
