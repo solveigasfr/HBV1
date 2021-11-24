@@ -29,13 +29,13 @@ public class ReportController {
         this.reportService = reportService;
     }
 
-    @RequestMapping("/home")
+    @RequestMapping("/getData")
     public String homePage(Model model) {
         // Call a method in a Service Class
         List<Report> allReports = reportService.findAll();
         // Add some data to the Model
         model.addAttribute("reports", allReports);
-        return "home";
+        return "reportData";
     }
 
     @RequestMapping(value = "/createReport", method = RequestMethod.GET)
@@ -80,7 +80,7 @@ public class ReportController {
         String tempSubject = report.getReportSubject();
         String tempLocation = report.getReportLocation().toString();
 
-        Email.sendEmail(tempEmail, tempTitle, tempSubject, tempLocation, tempImage);
+        Email.sendEmail(tempEmail, tempTitle, tempSubject, tempLocation, tempImage, sessionUser.getUserName());
 
         //model.addAttribute("reportTitle", report.getReportTitle());
         return "confirmation";
