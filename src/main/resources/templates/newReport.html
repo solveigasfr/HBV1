@@ -49,7 +49,7 @@
             <label class="label" for="reportSubject">Subject</label>
             <div class="control">
                 <textarea class="textarea" type="text" th:field="*{reportSubject}" id="reportSubject"
-                          placeholder="Textarea"></textarea>
+                          placeholder="Textarea" maxlength="1000" required></textarea>
                 <span th:if="${#fields.hasErrors('reportSubject')}" th:errors="*{reportSubject}"></span>
             </div>
         </div>
