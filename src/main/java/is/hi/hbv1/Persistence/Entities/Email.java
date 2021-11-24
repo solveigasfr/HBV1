@@ -30,7 +30,7 @@ public class Email {
         });
 
         MimeMessage message;
-        if (image != null) {
+        if (image != "") {
             message = prepareMessageWithImage(session, myAccountEmail, recipient, title, subject, location, image);
         }
         else {
