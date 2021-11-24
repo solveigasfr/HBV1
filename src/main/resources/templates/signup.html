@@ -27,6 +27,9 @@
         <div class="control">
             <input class="input" type="email" placeholder="Email" name="userEmail" id="userEmail" th:field="*{userEmail}"
                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/> <!--regex to allow only one @ and one or more dots -->
+            <div th:if="${emailCondition}">
+                <p style="color: red">An account already exists with this email.</p>
+            </div>
         </div>
     </div>
 
@@ -42,6 +45,9 @@
         <label class="label">Confirm password</label>
         <div class="control">
             <input class="input" type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" required>
+            <div th:if="${passwordCondition}">
+                <p style="color: red">Passwords do not match</p>
+            </div>
         </div>
     </div>
 

@@ -31,14 +31,18 @@ public class UserController {
     @RequestMapping(value = "/signUp", method = RequestMethod.POST)
     public String signupPOST(User user, Report report, BindingResult result, Model model, HttpSession session,
                              @RequestParam String confirmPassword) {
-        if (!confirmPassword.equals(user.getUserPassword())) {
-            String errorMessagePasswordMismatch = "Passwords do not match";
-            model.addAttribute(errorMessagePasswordMismatch);
-            return "redirect:/signup";
-        }
         if (result.hasErrors()) {
             //TODO add error messages so that the user will know what he did wrong
-            return "redirect:/signup";
+            return "signup";
+        }
+        User userEmailExists = userService.findByUserEmail(user.getUserEmail());
+        if (userEmailExists != null) {
+            model.addAttribute("emailCondition", true);
+            return "signup";
+        }
+        if (!confirmPassword.equals(user.getUserPassword())) {
+            model.addAttribute("passwordCondition", true);
+            return "signup";
         }
         User exists = userService.findByUserName(user.getUserName());
         if (exists == null) {
@@ -87,10 +91,6 @@ public class UserController {
     @RequestMapping(value = "/logIn", method = RequestMethod.POST)
     public String loginPOST(User user, Report report, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
-            /*TODO add error messages to show that the user either:
-               -typed wrong username
-               -typed wrong password
-            */
             return "redirect:/";
         }
         User exists = userService.logIn(user);
@@ -100,7 +100,8 @@ public class UserController {
             model.addAttribute("report", report);
             return "newReport";
         }
-        return "redirect:/";
+        model.addAttribute("emailOrPasswordCondition", true);
+        return "login";
     }
 
     @RequestMapping(value = "/loggedin", method = RequestMethod.GET)
@@ -153,15 +154,13 @@ public class UserController {
 
               // Check if the old password given is correct
               if (!sessionUser.getUserPassword().equals(oldPassword)) {
-                  String errorMessageOld = "Old password given is not correct";
-                  model.addAttribute(errorMessageOld);
+                  model.addAttribute("oldPasswordCondition", true);
                   return "changePassword";
               }
 
               // Check if new password and confirmed password match
               if (!newPassword.equals(confirmPassword)) {
-                  String errorMessageNew = "New password and confirm password do not match";
-                  model.addAttribute(errorMessageNew);
+                  model.addAttribute("passwordCondition", true);
                   return "changePassword";
               }
 

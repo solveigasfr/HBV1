@@ -64,6 +64,7 @@ public class HomeController {
         User sessionUser = (User) session.getAttribute("loggedInUser");
         report.setUserID(sessionUser.getUserID());
         String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        String tempImage = "";
 
         if(filename.hashCode() != 0) {
             report.setReportImages(filename);
@@ -76,13 +77,14 @@ public class HomeController {
                 // TODO pass some error to newReport that saving image failed
                 return "/newReport";
             }
+            tempImage = report.getReportImagesPath();
         }
 
         String tempEmail = sessionUser.getUserEmail();
         String tempTitle = report.getReportTitleAsString();
         String tempSubject = report.getReportSubject();
         String tempLocation = report.getReportLocation().toString();
-        String tempImage = report.getReportImagesPath();
+
         Email.sendEmail(tempEmail, tempTitle, tempSubject, tempLocation, tempImage);
 
         //model.addAttribute("reportTitle", report.getReportTitle());
