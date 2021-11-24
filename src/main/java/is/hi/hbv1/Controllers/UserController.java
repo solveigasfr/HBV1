@@ -44,11 +44,11 @@ public class UserController {
             model.addAttribute("passwordCondition", true);
             return "signup";
         }
-        User exists = userService.findByUserName(user.getUserName());
+        User exists = userService.findByUserEmail(user.getUserEmail());
         if (exists == null) {
             userService.save(user);
         }
-        User exists1 = userService.findByUserName(user.getUserName());
+        User exists1 = userService.findByUserEmail(user.getUserEmail());
         session.setAttribute("loggedInUser", exists1);
         model.addAttribute("loggedInUser", exists1);
         model.addAttribute("report", report);
@@ -170,7 +170,7 @@ public class UserController {
               //Update user in current session
               session.setAttribute("loggedInUser", sessionUser);
               model.addAttribute("report", report);
-              return "newReport";
+              return "changePasswordSuccessful";
           }
         // Return login if no user is logged in
         return "login";
