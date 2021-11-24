@@ -29,7 +29,13 @@ public class UserController {
     }
 
     @RequestMapping(value = "/signUp", method = RequestMethod.POST)
-    public String signupPOST(User user, Report report, BindingResult result, Model model, HttpSession session) {
+    public String signupPOST(User user, Report report, BindingResult result, Model model, HttpSession session,
+                             @RequestParam String confirmPassword) {
+        if (!confirmPassword.equals(user.getUserPassword())) {
+            String errorMessagePasswordMismatch = "Passwords do not match";
+            model.addAttribute(errorMessagePasswordMismatch);
+            return "redirect:/signup";
+        }
         if (result.hasErrors()) {
             //TODO add error messages so that the user will know what he did wrong
             return "redirect:/signup";
@@ -187,9 +193,20 @@ public class UserController {
     @RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
     public String deleteUserPOST(HttpSession session, Model model,
                                  @RequestParam String password) {
-        User loggedIn = (User) session.getAttribute("loggedInUser");
+        User exists = (User) session.getAttribute("loggedInUser");
+        if (exists != null) {
+            if (!exists.getUserPassword().equals(password)) {
+                String errorMessagePassword = "Password is not correct";
+                model.addAttribute(errorMessagePassword);
+                return "/deleteUser";
+            }
+            session.removeAttribute("loggedInUser");
+            userService.delete(exists);
+            return "/deleteConfirmation";
+        }
 
-        return "/deleteConfirmation";
+        // Return login if no user is logged in
+        return "login";
     }
 }
 
