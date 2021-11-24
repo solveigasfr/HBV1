@@ -26,21 +26,21 @@ import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Controller
-public class HomeController {
+public class ReportController {
     private ReportService reportService;
 
     @Autowired
-    public HomeController(ReportService reportService) {
+    public ReportController(ReportService reportService) {
         this.reportService = reportService;
     }
 
-    @RequestMapping("/home")
+    @RequestMapping("/getData")
     public String homePage(Model model) {
         // Call a method in a Service Class
         List<Report> allReports = reportService.findAll();
         // Add some data to the Model
         model.addAttribute("reports", allReports);
-        return "home";
+        return "reportData";
     }
 
     @RequestMapping(value = "/createReport", method = RequestMethod.GET)
@@ -64,6 +64,7 @@ public class HomeController {
         User sessionUser = (User) session.getAttribute("loggedInUser");
         report.setUserID(sessionUser.getUserID());
         String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        String tempImage = "";
 
         if(filename.hashCode() != 0) {
             report.setReportImages(filename);
@@ -76,14 +77,15 @@ public class HomeController {
                 // TODO pass some error to newReport that saving image failed
                 return "/newReport";
             }
+            tempImage = report.getReportImagesPath();
         }
 
         String tempEmail = sessionUser.getUserEmail();
         String tempTitle = report.getReportTitleAsString();
         String tempSubject = report.getReportSubject();
         String tempLocation = report.getReportLocation().toString();
-        String tempImage = report.getReportImagesPath();
-        Email.sendEmail(tempEmail, tempTitle, tempSubject, tempLocation, tempImage);
+
+        Email.sendEmail(tempEmail, tempTitle, tempSubject, tempLocation, tempImage, sessionUser.getUserName());
 
         //model.addAttribute("reportTitle", report.getReportTitle());
         return "confirmation";

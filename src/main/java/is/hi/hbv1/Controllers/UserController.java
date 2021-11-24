@@ -33,18 +33,25 @@ public class UserController implements Serializable {
     @RequestMapping(value = "/signUp", method = RequestMethod.POST)
     public String signupPOST(User user, Report report, BindingResult result, Model model, HttpSession session,
                              @RequestParam String confirmPassword) {
-        if (!confirmPassword.equals(user.getUserPassword())) {
-            String errorMessagePasswordMismatch = "Passwords do not match";
-            model.addAttribute(errorMessagePasswordMismatch);
-            return "redirect:/signup";
-        }
         if (result.hasErrors()) {
             //TODO add error messages so that the user will know what he did wrong
-            return "redirect:/signup";
+            return "signup";
         }
-        userService.save(user);
+        User userEmailExists = userService.findByUserEmail(user.getUserEmail());
+        if (userEmailExists != null) {
+            model.addAttribute("emailCondition", true);
+            return "signup";
+        }
+        if (!confirmPassword.equals(user.getUserPassword())) {
+            model.addAttribute("passwordCondition", true);
+            return "signup";
+        }
 
-        User exists1 = userService.findByUserName(user.getUserName());
+        User exists = userService.findByUserEmail(user.getUserEmail());
+        if (exists == null) {
+            userService.save(user);
+        }
+        User exists1 = userService.findByUserEmail(user.getUserEmail());
         session.setAttribute("loggedInUser", exists1);
         model.addAttribute("loggedInUser", exists1);
         model.addAttribute("report", report);
@@ -87,10 +94,6 @@ public class UserController implements Serializable {
     @RequestMapping(value = "/logIn", method = RequestMethod.POST)
     public String loginPOST(User user, Report report, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
-            /*TODO add error messages to show that the user either:
-               -typed wrong username
-               -typed wrong password
-            */
             return "redirect:/";
         }
         User exists = userService.logIn(user);
@@ -100,19 +103,22 @@ public class UserController implements Serializable {
             model.addAttribute("report", report);
             return "newReport";
         }
-        return "redirect:/";
+        model.addAttribute("emailOrPasswordCondition", true);
+        return "login";
     }
 
-    @RequestMapping(value = "/loggedin", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/loggedin", method = RequestMethod.GET)
     public String loggedinGET(HttpSession session, Model model, Report report) {
         User sessionUser = (User) session.getAttribute("loggedInUser");
         if (sessionUser != null) {
             model.addAttribute("loggedInUser", sessionUser);
             model.addAttribute("report", report);
-            return "/newReport";
+            return "newReport";
         }
         return "redirect:/";
     }
+
+     */
 
     // Log user out of account
     @RequestMapping(value = "/logOut", method = RequestMethod.GET)
@@ -128,7 +134,7 @@ public class UserController implements Serializable {
     }
 
     // Change user password
-    @RequestMapping(value = "/changePassword", method = RequestMethod.GET)
+    @RequestMapping(value = "/updatePassword", method = RequestMethod.GET)
     public String changePasswordGET(HttpSession session, Model model) {
         // Check if user is already logged in before accessing the change password page
         User sessionUser = (User) session.getAttribute("loggedInUser");
@@ -140,7 +146,7 @@ public class UserController implements Serializable {
         return "login";
     }
 
-    @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+    @RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
     public String changePasswordPOST(HttpSession session, Report report, Model model,
                                      @RequestParam String oldPassword,
                                      @RequestParam String newPassword,
@@ -153,15 +159,13 @@ public class UserController implements Serializable {
 
               // Check if the old password given is correct
               if (!sessionUser.getUserPassword().equals(oldPassword)) {
-                  String errorMessageOld = "Old password given is not correct";
-                  model.addAttribute(errorMessageOld);
+                  model.addAttribute("oldPasswordCondition", true);
                   return "changePassword";
               }
 
               // Check if new password and confirmed password match
               if (!newPassword.equals(confirmPassword)) {
-                  String errorMessageNew = "New password and confirm password do not match";
-                  model.addAttribute(errorMessageNew);
+                  model.addAttribute("passwordCondition", true);
                   return "changePassword";
               }
 
@@ -171,26 +175,26 @@ public class UserController implements Serializable {
               //Update user in current session
               session.setAttribute("loggedInUser", sessionUser);
               model.addAttribute("report", report);
-              return "newReport";
+              return "changePasswordSuccessful";
           }
         // Return login if no user is logged in
         return "login";
     }
 
     // Delete user account
-    @RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public String deleteUserGET(HttpSession session, Model model) {
         // Check if user is already logged in before accessing the delete account page
         User exists = (User) session.getAttribute("loggedInUser");
         if (exists != null) {
             model.addAttribute("loggedInUser", exists);
-            return "/deleteUser";
+            return "deleteUser";
         }
         // Return login if no user is logged in
         return "login";
     }
 
-    @RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String deleteUserPOST(HttpSession session, Model model,
                                  @RequestParam String password) {
         User exists = (User) session.getAttribute("loggedInUser");
@@ -198,11 +202,11 @@ public class UserController implements Serializable {
             if (!exists.getUserPassword().equals(password)) {
                 String errorMessagePassword = "Password is not correct";
                 model.addAttribute(errorMessagePassword);
-                return "/deleteUser";
+                return "deleteUser";
             }
             session.removeAttribute("loggedInUser");
             userService.delete(exists);
-            return "/deleteConfirmation";
+            return "deleteConfirmation";
         }
 
         // Return login if no user is logged in

@@ -8,7 +8,6 @@ public interface UserService {
     User save(User user);
     void delete(User user);
     User logIn(User user);
-    User findByUserName(String userName);
     User findByUserEmail(String userEmail);
     List<User> findAll();
     String get_SHA_512(String passwordToHash);

@@ -2,7 +2,7 @@
 <html xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Report Confirmed</title>
+    <title>Delete Account | RVK Report System</title>
     <link href="/css/style.css" type="text/css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <script src="/js/helper.js" type="text/javascript"></script>
@@ -14,7 +14,7 @@
 <section class="form-container box">
     <h2 class="is-size-3 has-text-centered has-text-weight-semibold mb-4 mt-4">Delete your account</h2>
 
-    <form th:action="@{/deleteUser}" th:object="${user}" method="post">
+    <form th:action="@{/delete}" th:object="${user}" method="post">
 
         <div class="field">
             <label class="label">Please insert your password</label>

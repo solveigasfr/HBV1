@@ -14,9 +14,12 @@
 
   <form action="#" th:action="@{/logIn}" th:object="${user}" method="post">
     <div class="field">
-      <label class="label" for="userName">Username</label>
+      <div th:if="${emailOrPasswordCondition}">
+        <h4 style="color: red">Email or password is incorrect</h4>
+      </div>
+      <label class="label" for="userEmail">Email Address</label>
       <div class="control">
-        <input class="input" type="text" placeholder="Username" name="userName" id="userName" th:field="*{userName}" required/>
+        <input class="input" type="text" placeholder="email@example.is" name="userEmail" id="userEmail" th:field="*{userEmail}" required/>
       </div>
     </div>
 
