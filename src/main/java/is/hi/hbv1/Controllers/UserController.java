@@ -104,16 +104,18 @@ public class UserController {
         return "login";
     }
 
-    @RequestMapping(value = "/loggedin", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/loggedin", method = RequestMethod.GET)
     public String loggedinGET(HttpSession session, Model model, Report report) {
         User sessionUser = (User) session.getAttribute("loggedInUser");
         if (sessionUser != null) {
             model.addAttribute("loggedInUser", sessionUser);
             model.addAttribute("report", report);
-            return "/newReport";
+            return "newReport";
         }
         return "redirect:/";
     }
+
+     */
 
     // Log user out of account
     @RequestMapping(value = "/logOut", method = RequestMethod.GET)
@@ -129,7 +131,7 @@ public class UserController {
     }
 
     // Change user password
-    @RequestMapping(value = "/changePassword", method = RequestMethod.GET)
+    @RequestMapping(value = "/updatePassword", method = RequestMethod.GET)
     public String changePasswordGET(HttpSession session, Model model) {
         // Check if user is already logged in before accessing the change password page
         User sessionUser = (User) session.getAttribute("loggedInUser");
@@ -141,7 +143,7 @@ public class UserController {
         return "login";
     }
 
-    @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+    @RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
     public String changePasswordPOST(HttpSession session, Report report, Model model,
                                      @RequestParam String oldPassword,
                                      @RequestParam String newPassword,
@@ -177,19 +179,19 @@ public class UserController {
     }
 
     // Delete user account
-    @RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public String deleteUserGET(HttpSession session, Model model) {
         // Check if user is already logged in before accessing the delete account page
         User exists = (User) session.getAttribute("loggedInUser");
         if (exists != null) {
             model.addAttribute("loggedInUser", exists);
-            return "/deleteUser";
+            return "deleteUser";
         }
         // Return login if no user is logged in
         return "login";
     }
 
-    @RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String deleteUserPOST(HttpSession session, Model model,
                                  @RequestParam String password) {
         User exists = (User) session.getAttribute("loggedInUser");
@@ -197,11 +199,11 @@ public class UserController {
             if (!exists.getUserPassword().equals(password)) {
                 String errorMessagePassword = "Password is not correct";
                 model.addAttribute(errorMessagePassword);
-                return "/deleteUser";
+                return "deleteUser";
             }
             session.removeAttribute("loggedInUser");
             userService.delete(exists);
-            return "/deleteConfirmation";
+            return "deleteConfirmation";
         }
 
         // Return login if no user is logged in
