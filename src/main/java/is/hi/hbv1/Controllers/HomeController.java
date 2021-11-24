@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,7 @@ public class HomeController {
         report.setUserID(sessionUser.getUserID());
         String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 
-        if(filename != null) {
+        if(filename.hashCode() != 0) {
             report.setReportImages(filename);
             Report savedReport = reportService.save(report);
             String uploadDir = "uploads/reportImages/" + savedReport.getReportID();
@@ -81,7 +82,8 @@ public class HomeController {
         String tempTitle = report.getReportTitleAsString();
         String tempSubject = report.getReportSubject();
         String tempLocation = report.getReportLocation().toString();
-        Email.sendEmail(tempEmail, tempTitle, tempSubject, tempLocation);
+        String tempImage = report.getReportImagesPath();
+        Email.sendEmail(tempEmail, tempTitle, tempSubject, tempLocation, tempImage);
 
         //model.addAttribute("reportTitle", report.getReportTitle());
         return "confirmation";
