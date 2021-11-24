@@ -51,7 +51,7 @@ public class Email {
                     + "<p>" + subject + "</p>"
                     + "<p> Location coordinates: " + location + "</p>"
                     + "<img src=\"cid:image\">";
-            messageBodyPart.setContent(htmlText, "text/html");
+            messageBodyPart.setContent(htmlText, "text/html;charset=utf-8");
 
             // add it
             multipart.addBodyPart(messageBodyPart);
