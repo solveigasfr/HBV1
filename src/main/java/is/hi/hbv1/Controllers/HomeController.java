@@ -81,7 +81,8 @@ public class HomeController {
         String tempTitle = report.getReportTitleAsString();
         String tempSubject = report.getReportSubject();
         String tempLocation = report.getReportLocation().toString();
-        Email.sendEmail(tempEmail, tempTitle, tempSubject, tempLocation);
+        String tempImage = report.getReportImagesPath();
+        Email.sendEmail(tempEmail, tempTitle, tempSubject, tempLocation, tempImage);
 
         //model.addAttribute("reportTitle", report.getReportTitle());
         return "confirmation";
