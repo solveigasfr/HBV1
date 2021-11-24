@@ -26,11 +26,11 @@ import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Controller
-public class HomeController {
+public class ReportController {
     private ReportService reportService;
 
     @Autowired
-    public HomeController(ReportService reportService) {
+    public ReportController(ReportService reportService) {
         this.reportService = reportService;
     }
 
