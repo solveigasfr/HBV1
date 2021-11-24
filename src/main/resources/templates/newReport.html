@@ -49,7 +49,7 @@
             <label class="label" for="reportSubject">Subject</label>
             <div class="control">
                 <textarea class="textarea" type="text" th:field="*{reportSubject}" id="reportSubject"
-                          placeholder="Textarea"></textarea>
+                          placeholder="Textarea" maxlength="1000" required></textarea>
                 <span th:if="${#fields.hasErrors('reportSubject')}" th:errors="*{reportSubject}"></span>
             </div>
         </div>
@@ -58,10 +58,14 @@
         <div class="field">
             <label class="label">Location implementation</label>
             <input type="hidden" th:value="${reportLocation}" name="reportLocation" id="reportLocation">
-            <p class="subtitle is-5 has-text-centered mb-4 mt-4">Please choose a location for the report</p>
+            <input type="hidden" value="temp_marker" name="temp_marker" id="temp_marker">
+            <p class="subtitle is-5 has-text-centered mb-4 mt-4">
+                Choose a location by clicking on the map to place a marker</p>
             <div>
                 <iframe id="map" src="/getMap" title="map" height="400" width="100%" loading="lazy"></iframe>
                 <span th:if="${#fields.hasErrors('reportLocation')}" th:errors="*{reportLocation}"></span>
+                <p>Please note, if you use the "find my location" button, then you should still click on the map
+                    to set a marker.</p>
             </div>
         </div>
 

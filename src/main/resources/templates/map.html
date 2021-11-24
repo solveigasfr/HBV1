@@ -75,6 +75,7 @@
         const coordinates = e.lngLat; //getting the coordinates of mouse pointer
         const coor = [coordinates["lat"], coordinates["lng"]].join(",")
         parent.document.getElementById("reportLocation").value = coor;
+        parent.document.getElementById("temp_marker").value = marker;
         marker.remove(); // If there is an old marker then we remove it
         marker = new mapboxgl.Marker({
             draggable: true // why not?
@@ -87,7 +88,7 @@
     // Adding zoom and rotation controls to the map.******************************
     map.addControl(new mapboxgl.NavigationControl());
     //end ************************************************************************
-/*
+
     // Adding the option to let user share his location.**************************
     map.addControl(
         new mapboxgl.GeolocateControl({
@@ -102,18 +103,7 @@
     );
     //end ************************************************************************
 
- */
-    /*
-    map.addControl(new MapboxExportControl({
-        PageSize: Size.A3,
-        PageOrientation: PageOrientation.Portrait,
-        Format: Format.PNG,
-        DPI: DPI[96],
-        Crosshair: true,
-        PrintableArea: true
-    }), 'top-right');
 
-     */
 </script>
 
 </body>
