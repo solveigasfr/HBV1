@@ -11,5 +11,6 @@ public interface UserService {
     User findByUserName(String userName);
     User findByUserEmail(String userEmail);
     List<User> findAll();
-
+    String get_SHA_512(String passwordToHash);
+    User changePassword(User user, String password);
 }

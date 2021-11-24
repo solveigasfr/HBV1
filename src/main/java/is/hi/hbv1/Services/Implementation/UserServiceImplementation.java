@@ -7,6 +7,9 @@ import is.hi.hbv1.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,5 +77,30 @@ public class UserServiceImplementation implements UserService {
             }
         }
         return null;
+    }
+
+    // Hash user password with SHA-512
+    @Override
+    public String get_SHA_512(String passwordToHash){
+        String generatedPassword = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            byte[] bytes = md.digest(passwordToHash.getBytes(StandardCharsets.UTF_8));
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i< bytes.length ;i++){
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            generatedPassword = sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return generatedPassword;
+    }
+
+    // Update user password
+    @Override
+    public User changePassword(User user, String password) {
+        user.setUserPassword(password);
+        return userRepository.save(user);
     }
 }

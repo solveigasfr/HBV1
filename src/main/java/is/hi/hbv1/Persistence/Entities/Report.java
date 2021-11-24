@@ -55,14 +55,6 @@ public class Report implements Serializable {
         this.reportDate = reportDate;
     }
 
-    /*
-    public Report(ReportTitle reportTitle, String reportSubject, LocalDate reportDate) {
-        this.reportTitle = reportTitle;
-        this.reportSubject = reportSubject;
-        this.reportDate = reportDate;
-    }
-     */
-
     public boolean isSelected(ReportTitle selectedReportTitle){
         if (selectedReportTitle != null) {
             return selectedReportTitle.equals(reportTitle);
