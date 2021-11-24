@@ -28,7 +28,6 @@ public class Report implements Serializable {
             -Find a way to save reportTitle to the report
         -Later: reportImages, reportLocation
      */
-
     @NotNull
     private ReportTitle reportTitle;
     private String reportSubject = null;

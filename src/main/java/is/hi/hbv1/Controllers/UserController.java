@@ -2,6 +2,7 @@ package is.hi.hbv1.Controllers;
 
 import is.hi.hbv1.Persistence.Entities.Report;
 import is.hi.hbv1.Persistence.Entities.User;
+import is.hi.hbv1.Persistence.Repositories.UserRepository;
 import is.hi.hbv1.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,9 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.io.Serializable;
 
 @Controller
-public class UserController {
+public class UserController implements Serializable {
 
     UserService userService;
 
@@ -30,14 +32,18 @@ public class UserController {
 
     @RequestMapping(value = "/signUp", method = RequestMethod.POST)
     public String signupPOST(User user, Report report, BindingResult result, Model model, HttpSession session){
+
+        User exists = userService.findByUserEmail(user.getUserEmail());
+        if(exists != null){
+            result.rejectValue("userEmail", "not", "An account already exists with this email");
+        }
+
         if(result.hasErrors()){
-            //TODO add error messages so that the user will know what he did wrong
-            return "redirect:/signup";
+
+            return "redirect:/";
         }
-        User exists = userService.findByUserName(user.getUserName());
-        if(exists == null){
-            userService.save(user);
-        }
+        userService.save(user);
+
         User exists1 = userService.findByUserName(user.getUserName());
         session.setAttribute("loggedInUser", exists1);
         model.addAttribute("loggedInUser", exists1);
