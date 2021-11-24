@@ -26,35 +26,9 @@ function previewFiles() {
     }
 }
 
-// let serverContext = "[[@{/}]]";
-//     function savePassword(){
-//         // Check if the old password given is correct
-//         var validateOld = loggedIn.getUserPassword() === $("#oldPassword ").val();
-//         if(!validateOld) {
-//             $("#error").show();
-//             return;
-//         }
-//
-//         // Check if new password and confirmed password match
-//         var newPassword = $("#newPassword").val();
-//         var validateNew = password == $("#confirmPassword").val();
-//         if(!valid) {
-//             $("#error").show();
-//             return;
-//         }
-//
-//         $.post(serverContext + "userController/updatePassword",
-//             {password: password, oldpassword: $("#oldpass").val()} ,function(data){
-//                 window.location.href = serverContext +"/home.html?message="+data.message;
-//             })
-//             .fail(function(data) {
-//                 $("#errormsg").show().html(data.responseJSON.message);
-//             });
-//     }
-
 function init(event) {
 
-    // Make My account dropdown menu togglable
+    // Make My account dropdown menu toggleable
     const dropdown = document.querySelector('.dropdown');
     const dropdownButton = document.querySelector('.dropdown button');
 
