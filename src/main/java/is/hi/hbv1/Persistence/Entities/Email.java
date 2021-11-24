@@ -11,7 +11,8 @@ import javax.mail.internet.MimeMultipart;
 import java.util.Properties;
 
 public class Email {
-    public static void sendEmail(String recipient, String title, String subject, String location, String image) throws MessagingException {
+    public static void sendEmail(String recipient, String title, String subject, String location, String image,
+                                 String userName) throws MessagingException {
         Properties properties = new Properties();
 
         properties.put("mail.smtp.auth", "true");
@@ -31,17 +32,17 @@ public class Email {
 
         MimeMessage message;
         if (image != "") {
-            message = prepareMessageWithImage(session, myAccountEmail, recipient, title, subject, location, image);
+            message = prepareMessageWithImage(session, myAccountEmail, recipient, title, subject, location, image, userName);
         }
         else {
-            message = prepareMessageWithoutImage(session, myAccountEmail, recipient, title, subject, location);
+            message = prepareMessageWithoutImage(session, myAccountEmail, recipient, title, subject, location, userName);
         }
         Transport.send(message);
     }
 
     // message with image
     private static MimeMessage prepareMessageWithImage(Session session, String myAccountEmail, String recipient,
-                                          String title, String subject, String location, String image){
+                                          String title, String subject, String location, String image, String userName){
         MimeMessage message = new MimeMessage(session);
         try {
             message.setFrom(new InternetAddress(myAccountEmail));
@@ -53,6 +54,7 @@ public class Email {
             // first part  (the html)
             BodyPart messageBodyPart = new MimeBodyPart();
             String htmlText = "<H1>Report - RVK Report System</H1>"
+                    + "<p>User " + userName + "just submitted this report:</p>"
                     + "<p>" + subject + "</p>"
                     + "<p> Location coordinates: " + location + "</p>"
                     + "<img src=\"cid:image\">";
@@ -85,7 +87,7 @@ public class Email {
 
     // message without an image
     private static MimeMessage prepareMessageWithoutImage(Session session, String myAccountEmail, String recipient,
-                                                       String title, String subject, String location){
+                                                       String title, String subject, String location, String userName){
         MimeMessage message = new MimeMessage(session);
         try {
             message.setFrom(new InternetAddress(myAccountEmail));
@@ -97,6 +99,7 @@ public class Email {
             // first part  (the html)
             BodyPart messageBodyPart = new MimeBodyPart();
             String htmlText = "<H1>Report - RVK Report System</H1>"
+                    + "<p>User " + userName + "just submitted this report:</p>"
                     + "<p>" + subject + "</p>"
                     + "<p> Location coordinates: " + location + "</p>";
             messageBodyPart.setContent(htmlText, "text/html;charset=utf-8");
