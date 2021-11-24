@@ -31,6 +31,11 @@ public class UserController {
     @RequestMapping(value = "/signUp", method = RequestMethod.POST)
     public String signupPOST(User user, Report report, BindingResult result, Model model, HttpSession session,
                              @RequestParam String confirmPassword) {
+        if (!confirmPassword.equals(user.getUserPassword())) {
+            String errorMessagePasswordMismatch = "Passwords do not match";
+            model.addAttribute(errorMessagePasswordMismatch);
+            return "redirect:/signup";
+        }
         if (result.hasErrors()) {
             //TODO add error messages so that the user will know what he did wrong
             return "redirect:/signup";
