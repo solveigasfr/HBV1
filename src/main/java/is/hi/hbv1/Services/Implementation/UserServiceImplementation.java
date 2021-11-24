@@ -65,6 +65,11 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
+    public User findByUserEmail(String userEmail) {
+        return userRepository.findByUserEmail(userEmail);
+    }
+
+    @Override
     public User logIn(User user) {
         User doesExist = findByUserName(user.getUserName());
         if(doesExist != null){
