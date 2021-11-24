@@ -21,11 +21,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Controller
-public class HomeController {
+public class ReportController {
     private ReportService reportService;
 
     @Autowired
-    public HomeController(ReportService reportService) {
+    public ReportController(ReportService reportService) {
         this.reportService = reportService;
     }
 
