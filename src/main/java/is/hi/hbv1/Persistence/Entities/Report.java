@@ -128,6 +128,6 @@ public class Report implements Serializable {
 
     @Transient
     public String getReportImagesPath() {
-        return "/reportImages/" + this.reportID + "/" + this.reportImages;
+        return "uploads/reportImages/" + this.reportID + "/" + this.reportImages;
     }
 }
