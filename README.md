@@ -3,11 +3,12 @@
   <br>
   <img src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Freykjavik.is%2Fsites%2Fdefault%2Ffiles%2Fmerki-an-texta.jpg&f=1&nofb=1" width="200">
   <br>
-  Reykjavík Report System
+  Civil Service Notification Program
   <br>
 </h1>
 
-<h4 align="center">A minimal report system website built for the community of Reykjavík city</h4>
+<h4 align="center">A minimal report system website built for the community of Reykjavík city. Group project for 
+Software Project 1 at the University of Iceland</h4>
 
 <p align="center">
   <a href="#how-to-build-and-run">How To Build and Run</a> •
