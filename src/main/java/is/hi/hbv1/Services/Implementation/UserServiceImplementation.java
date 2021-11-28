@@ -15,37 +15,15 @@ import java.util.List;
 
 @Service
 public class UserServiceImplementation implements UserService {
-    /* Ingimar commented out 23.okt
-    private List<User> userRepository = new ArrayList<>();
-    private int id_counter;
-     */
     private UserRepository userRepository;
 
     @Autowired
     public UserServiceImplementation(UserRepository userRepository) {
-        // Create 3 random users for our dummy repo. To be removed when JPA added.
-        /* Ingimar commented out 23.okt
-        userRepository.add(new User("User1", "user1@net.is", "12345"));
-        userRepository.add(new User("User2", "user2@net.is", "hallo"));
-        userRepository.add(new User("User3", "user3@net.is", "password"));
-
-        // JPA gives each report and ID, but there we add them manually
-        for (User u : userRepository) {
-            u.setUserID(id_counter);
-            id_counter++;
-        }
-         */
         this.userRepository = userRepository;
     }
 
     @Override
     public User save(User user) {
-        /* Ingimar commented out 23.okt
-        user.setUserID(id_counter);
-        id_counter++;
-        userRepository.add(user);
-        return user;
-         */
         return userRepository.save(user);
     }
 

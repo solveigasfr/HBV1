@@ -6,17 +6,10 @@ import java.util.List;
 
 public interface ReportService {
     List<Report> findAll();
+
     Report save(Report report);
+
     void delete(Report report);
-    //List<Report> findAllByUserID(Long userID);  Ingimar commented out 23.okt
+
     Report findByReportID(long reportID);
-
-    /*
-    TODO Implement functionality to send the report to user and recipient
-     */
-    /* Ingimar commented out 23.okt
-    void sendToUser(Report report, String userEmail);
-    void sendToRecipient(Report report);
-
-     */
 }

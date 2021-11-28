@@ -6,7 +6,8 @@
     <meta name="robots" content="noindex, nofollow">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://js.sentry-cdn.com/b4e18cb1943f46289f67ca6a771bd341.min.js" crossorigin="anonymous"></script>
-    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-instrumentile/v3.0.0/mapbox-gl-instrumentile.js" crossorigin="anonymous"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-instrumentile/v3.0.0/mapbox-gl-instrumentile.js"
+            crossorigin="anonymous"></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.js"></script>
     <style>
         #map {
@@ -15,10 +16,12 @@
             bottom: 0;
             width: 100%;
         }
+
         #geocoder-container > div {
             min-width: 50%;
             margin-left: 25%;
         }
+
         #map canvas {
             cursor: default;
         }
@@ -26,7 +29,6 @@
 </head>
 <body>
 
-<!-- Load the `mapbox-gl-geocoder` plugin. for search bar in map and marker eftir search -->
 <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"></script>
 <link rel="stylesheet"
       href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css"
@@ -61,10 +63,7 @@
     // Add the control to the map. (search bar and pinpoint marker after search)**
     map.addControl(
         new MapboxGeocoder({
-            accessToken: mapboxgl.accessToken,
-            //mapboxgl: mapboxgl
-            // TODO take out marker after a search is made. This is an ugly fix for that!
-            // (the ugly fix is commenting the line above the TODO line)
+            accessToken: mapboxgl.accessToken
         })
     );
     //end ************************************************************************
@@ -102,9 +101,6 @@
         })
     );
     //end ************************************************************************
-
-
 </script>
-
 </body>
 </html>

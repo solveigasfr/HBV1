@@ -8,7 +8,7 @@ function previewFiles() {
         if (/\.(jpe?g|png|gif)$/i.test(file.name)) {
             const reader = new FileReader();
 
-            reader.addEventListener("load",function ()  {
+            reader.addEventListener("load", function () {
                 const image = new Image();
                 image.height = 150;
                 image.width = 150;
@@ -32,7 +32,7 @@ function init(event) {
     const dropdown = document.querySelector('.dropdown');
     const dropdownButton = document.querySelector('.dropdown button');
 
-    if(dropdownButton) {
+    if (dropdownButton) {
         dropdownButton.addEventListener('click', () => {
             dropdown.classList.toggle('is-active');
         });
