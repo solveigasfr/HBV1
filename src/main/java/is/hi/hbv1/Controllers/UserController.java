@@ -32,7 +32,6 @@ public class UserController {
     public String signupPOST(User user, Report report, BindingResult result, Model model, HttpSession session,
                              @RequestParam String confirmPassword) {
         if (result.hasErrors()) {
-            //TODO add error messages so that the user will know what he did wrong
             return "signup";
         }
         User userEmailExists = userService.findByUserEmail(user.getUserEmail());
@@ -104,19 +103,6 @@ public class UserController {
         return "login";
     }
 
-    /*@RequestMapping(value = "/loggedin", method = RequestMethod.GET)
-    public String loggedinGET(HttpSession session, Model model, Report report) {
-        User sessionUser = (User) session.getAttribute("loggedInUser");
-        if (sessionUser != null) {
-            model.addAttribute("loggedInUser", sessionUser);
-            model.addAttribute("report", report);
-            return "newReport";
-        }
-        return "redirect:/";
-    }
-
-     */
-
     // Log user out of account
     @RequestMapping(value = "/logOut", method = RequestMethod.GET)
     public String logOutGET(User user, HttpSession session) {
@@ -137,7 +123,7 @@ public class UserController {
         User sessionUser = (User) session.getAttribute("loggedInUser");
         if (sessionUser != null) {
             model.addAttribute("loggedInUser", sessionUser);
-            return "/changePassword";
+            return "changePassword";
         }
         // Return login if no user is logged in
         return "login";
@@ -148,32 +134,29 @@ public class UserController {
                                      @RequestParam String oldPassword,
                                      @RequestParam String newPassword,
                                      @RequestParam String confirmPassword) {
-          User sessionUser = (User) session.getAttribute("loggedInUser");
-          if(sessionUser!= null) {
+        User sessionUser = (User) session.getAttribute("loggedInUser");
+        if (sessionUser != null) {
 
-//              // Hash current user password
-//              var oldPasswordHashed = userService.get_SHA_512(oldPassword);
+            // Check if the old password given is correct
+            if (!sessionUser.getUserPassword().equals(oldPassword)) {
+                model.addAttribute("oldPasswordCondition", true);
+                return "changePassword";
+            }
 
-              // Check if the old password given is correct
-              if (!sessionUser.getUserPassword().equals(oldPassword)) {
-                  model.addAttribute("oldPasswordCondition", true);
-                  return "changePassword";
-              }
+            // Check if new password and confirmed password match
+            if (!newPassword.equals(confirmPassword)) {
+                model.addAttribute("passwordCondition", true);
+                return "changePassword";
+            }
 
-              // Check if new password and confirmed password match
-              if (!newPassword.equals(confirmPassword)) {
-                  model.addAttribute("passwordCondition", true);
-                  return "changePassword";
-              }
+            // Change user password to given new password
+            sessionUser = userService.changePassword(sessionUser, newPassword);
 
-              // Change user password to given new password
-              sessionUser = userService.changePassword(sessionUser, newPassword);
-
-              //Update user in current session
-              session.setAttribute("loggedInUser", sessionUser);
-              model.addAttribute("report", report);
-              return "changePasswordSuccessful";
-          }
+            //Update user in current session
+            session.setAttribute("loggedInUser", sessionUser);
+            model.addAttribute("report", report);
+            return "changePasswordSuccessful";
+        }
         // Return login if no user is logged in
         return "login";
     }
@@ -197,8 +180,7 @@ public class UserController {
         User exists = (User) session.getAttribute("loggedInUser");
         if (exists != null) {
             if (!exists.getUserPassword().equals(password)) {
-                String errorMessagePassword = "Password is not correct";
-                model.addAttribute(errorMessagePassword);
+                model.addAttribute("passwordCondition", true);
                 return "deleteUser";
             }
             session.removeAttribute("loggedInUser");

@@ -33,8 +33,7 @@ public class Email {
         MimeMessage message;
         if (image != "") {
             message = prepareMessageWithImage(session, myAccountEmail, recipient, title, subject, location, image, userName);
-        }
-        else {
+        } else {
             message = prepareMessageWithoutImage(session, myAccountEmail, recipient, title, subject, location, userName);
         }
         Transport.send(message);
@@ -42,7 +41,7 @@ public class Email {
 
     // message with image
     private static MimeMessage prepareMessageWithImage(Session session, String myAccountEmail, String recipient,
-                                          String title, String subject, String location, String image, String userName){
+                                                       String title, String subject, String location, String image, String userName) {
         MimeMessage message = new MimeMessage(session);
         try {
             message.setFrom(new InternetAddress(myAccountEmail));
@@ -67,9 +66,9 @@ public class Email {
             messageBodyPart = new MimeBodyPart();
             DataSource fds = new FileDataSource
                     (image);
-                //("C:\\app_projects\\HBV1\\" + image); //has to be hardcoded now but will change when implemented online
+            //("C:\\app_projects\\HBV1\\" + image); //has to be hardcoded now but will change when implemented online
             messageBodyPart.setDataHandler(new DataHandler(fds));
-            messageBodyPart.setHeader("Content-ID","<image>");
+            messageBodyPart.setHeader("Content-ID", "<image>");
 
             // add it
             multipart.addBodyPart(messageBodyPart);
@@ -87,7 +86,7 @@ public class Email {
 
     // message without an image
     private static MimeMessage prepareMessageWithoutImage(Session session, String myAccountEmail, String recipient,
-                                                       String title, String subject, String location, String userName){
+                                                          String title, String subject, String location, String userName) {
         MimeMessage message = new MimeMessage(session);
         try {
             message.setFrom(new InternetAddress(myAccountEmail));

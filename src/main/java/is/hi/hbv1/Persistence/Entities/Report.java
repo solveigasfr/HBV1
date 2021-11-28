@@ -10,24 +10,13 @@ import java.util.List;
 
 @Entity
 @Table(name = "reports")
-// kommenta hér hvað serializable gerir
 public class Report implements Serializable {
 
     private long userID;
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long reportID;
-
-    /*
-    TODO
-        -Get the Report to save more stuff than reportSubject
-            -Find a way to get reportID and userID from a saved report
-            -Find a way to save reportTitle to the report
-        -Later: reportImages, reportLocation
-     */
 
     @NotNull
     private ReportTitle reportTitle;
@@ -39,7 +28,6 @@ public class Report implements Serializable {
     @Column(nullable = true, length = 64)
     private String reportImages;
 
-    //@NotNull
     private LocalDate reportDate;
 
     public Report() {
@@ -56,14 +44,6 @@ public class Report implements Serializable {
         this.reportDate = reportDate;
     }
 
-    public boolean isSelected(ReportTitle selectedReportTitle){
-        if (selectedReportTitle != null) {
-            return selectedReportTitle.equals(reportTitle);
-        }
-        return false;
-    }
-
-
     public long getUserID() {
         return userID;
     }
@@ -71,7 +51,6 @@ public class Report implements Serializable {
     public void setUserID(long userID) {
         this.userID = userID;
     }
-
 
     public long getReportID() {
         return reportID;
@@ -85,7 +64,7 @@ public class Report implements Serializable {
         return reportTitle;
     }
 
-    public String getReportTitleAsString(){
+    public String getReportTitleAsString() {
         return reportTitle.getDisplayName();
     }
 
@@ -124,7 +103,6 @@ public class Report implements Serializable {
     public void setReportDate(LocalDate reportDate) {
         this.reportDate = reportDate;
     }
-
 
     @Transient
     public String getReportImagesPath() {

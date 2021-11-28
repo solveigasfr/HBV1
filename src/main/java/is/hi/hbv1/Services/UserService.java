@@ -6,10 +6,16 @@ import java.util.List;
 
 public interface UserService {
     User save(User user);
+
     void delete(User user);
+
     User logIn(User user);
+
     User findByUserEmail(String userEmail);
+
     List<User> findAll();
+
     String get_SHA_512(String passwordToHash);
+
     User changePassword(User user, String password);
 }

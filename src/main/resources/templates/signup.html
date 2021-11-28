@@ -7,57 +7,66 @@
 </head>
 <body>
 
-<header th:insert="basicHeader.html :: basicHeader"> </header>
+<header th:insert="basicHeader.html :: basicHeader"></header>
 
 <section class="form-container box">
-<h2 class="is-size-3 has-text-centered has-text-weight-semibold mb-4">Sign up for an account</h2>
-
-<form action="#" th:action="@{/signUp}" th:object="${user}"  method="post">
-
+    <h2 class="is-size-3 has-text-centered has-text-weight-semibold mb-4">Sign up for an account</h2>
     <div class="field">
-        <label class="label" for="userName">Username</label>
-        <div class="control">
-            <input class="input" type="text" placeholder="Username" name="userName" id="userName" th:field="*{userName}"
-               pattern="^\S+$"/>
-        </div>
+        <p>Already have an account? <a href="/logIn">Log in here</a></p>
     </div>
 
-    <div class="field">
-        <label class="label" for="userEmail">Email</label>
-        <div class="control">
-            <input class="input" type="email" placeholder="email@example.is" name="userEmail" id="userEmail" th:field="*{userEmail}"
-               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/> <!--regex to allow only one @ and one or more dots -->
-            <div th:if="${emailCondition}">
-                <p style="color: red">An account already exists with this email.</p>
+    <form action="#" th:action="@{/signUp}" th:object="${user}" method="post">
+
+        <div class="field">
+            <label class="label" for="userName">Username</label>
+            <div class="control">
+                <input class="input" type="text" placeholder="Username" name="userName" id="userName"
+                       th:field="*{userName}"
+                       pattern="^\S+$"/>
             </div>
         </div>
-    </div>
 
-    <div class="field">
-        <label class="label" for="userPassword">Create password</label>
-        <div class="control">
-            <input class="input" type="password" placeholder="Password" name="userPassword" id="userPassword" th:value="*{userPassword}"
-               minlength="8" maxlength="20" pattern="^\S+$" required/> <!--regex in pattern to not allow spaces -->
-        </div>
-    </div>
-
-    <div class="field">
-        <label class="label">Confirm password</label>
-        <div class="control">
-            <input class="input" type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" required>
-            <div th:if="${passwordCondition}">
-                <p style="color: red">Passwords do not match</p>
+        <div class="field">
+            <label class="label" for="userEmail">Email</label>
+            <div class="control">
+                <input class="input" type="email" placeholder="email@example.is" name="userEmail" id="userEmail"
+                       th:field="*{userEmail}"
+                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/>
+                <!--regex to allow only one @ and one or more dots -->
+                <div th:if="${emailCondition}">
+                    <p style="color: red">An account already exists with this email.</p>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="field">
-        <div class="control">
-            <button class="button is-link" value="Sign up">Sign up</button>
+        <div class="field">
+            <label class="label" for="userPassword">Create password</label>
+            <div class="control">
+                <input class="input" type="password" placeholder="Password" name="userPassword" id="userPassword"
+                       th:value="*{userPassword}"
+                       minlength="8" maxlength="20" pattern="^\S+$" required/>
+                <!--regex in pattern to not allow spaces -->
+            </div>
         </div>
-    </div>
 
-</form>
+        <div class="field">
+            <label class="label">Confirm password</label>
+            <div class="control">
+                <input class="input" type="password" id="confirmPassword" name="confirmPassword"
+                       placeholder="Confirm password" required>
+                <div th:if="${passwordCondition}">
+                    <p style="color: red">Passwords do not match</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <button class="button is-link" value="Sign up">Sign up</button>
+            </div>
+        </div>
+
+    </form>
 </section>
 </body>
 </html>
