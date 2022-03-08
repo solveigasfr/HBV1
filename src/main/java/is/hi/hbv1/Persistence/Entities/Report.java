@@ -1,5 +1,6 @@
 package is.hi.hbv1.Persistence.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "reports")
+@JsonIgnoreProperties({"reportLocation"})
 public class Report implements Serializable {
 
     private long userID;
@@ -18,6 +20,14 @@ public class Report implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long reportID;
 
+
+    /*
+    TODO
+        -Get the Report to save more stuff than reportSubject
+            -Find a way to get reportID and userID from a saved report
+            -Find a way to save reportTitle to the report
+        -Later: reportImages, reportLocation
+     */
     @NotNull
     private ReportTitle reportTitle;
     private String reportSubject = null;
