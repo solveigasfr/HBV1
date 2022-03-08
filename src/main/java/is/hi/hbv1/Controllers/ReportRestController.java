@@ -29,8 +29,8 @@ public class ReportRestController {
         this.reportService = reportService;
     }
 
-    @GetMapping("/getAllReports")
-    public List<Report> getAllReports() {
+    @RequestMapping("/getAllReports")
+    public List<Report> getAllReports() throws InterruptedException {
         // Call a method in a Service Class
         List<Report> allReports = reportService.findAll();
         // Add some data to the Model
