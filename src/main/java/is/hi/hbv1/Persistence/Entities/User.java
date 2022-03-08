@@ -1,5 +1,8 @@
 package is.hi.hbv1.Persistence.Entities;
 
+import is.hi.hbv1.Controllers.UserController;
+import is.hi.hbv1.Persistence.Repositories.UserRepository;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -12,7 +15,10 @@ public class User implements Serializable {
     private long userID;
 
     private String userName;
+
+    @Column(nullable = false, unique = true)
     private String userEmail;
+
     private String userPassword;
 
     public User() {
