@@ -26,16 +26,13 @@
             </div>
         </div>
 
-        <div class="field">
-            <label class="label" for="userEmail">Email</label>
-            <div class="control">
-                <input class="input" type="email" placeholder="email@example.is" name="userEmail" id="userEmail"
-                       th:field="*{userEmail}"
-                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/>
-                <!--regex to allow only one @ and one or more dots -->
-                <div th:if="${emailCondition}">
-                    <p style="color: red">An account already exists with this email.</p>
-                </div>
+    <div class="field" th:classappend="${#fields.hasErrors('userEmail')}? 'has-error': ' '">
+        <label class="label" for="userEmail">Email</label>
+        <div class="control">
+            <input class="input" type="email" placeholder="email@example.is" name="userEmail" id="userEmail" th:field="*{userEmail}"
+               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/> <!--regex to allow only one @ and one or more dots -->
+            <div th:if="${emailCondition}">
+                <p style="color: red">An account already exists with this email.</p>
             </div>
         </div>
 
