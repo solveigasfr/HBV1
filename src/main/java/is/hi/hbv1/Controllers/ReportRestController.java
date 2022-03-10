@@ -7,6 +7,7 @@ import is.hi.hbv1.Persistence.Entities.ReportTitle;
 import is.hi.hbv1.Persistence.Entities.User;
 import is.hi.hbv1.Persistence.Repositories.ReportRepository;
 import is.hi.hbv1.Services.ReportService;
+import is.hi.hbv1.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -23,10 +24,11 @@ import java.util.List;
 @RestController
 public class ReportRestController {
     private ReportService reportService;
+    private UserService userService;
 
     @Autowired
-    public ReportRestController(ReportService reportService) {
-        this.reportService = reportService;
+    public ReportRestController(UserService userService) {
+        this.userService = userService;
     }
 
     @RequestMapping("/getAllReports")
@@ -36,6 +38,15 @@ public class ReportRestController {
         // Add some data to the Model
         //model.addAttribute("reports", allReports);
         return allReports;
+    }
+
+    @RequestMapping("/getUser")
+    public List<User> getUser() throws InterruptedException {
+        // Call a method in a Service Class
+        List<User> user = userService.findAll();
+        // Add some data to the Model
+        //model.addAttribute("reports", allReports);
+        return user;
     }
     /*
     @RequestMapping(value = "/createReport", method = RequestMethod.GET)
