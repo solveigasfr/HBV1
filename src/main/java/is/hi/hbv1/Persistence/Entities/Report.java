@@ -2,6 +2,8 @@ package is.hi.hbv1.Persistence.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
+import is.hi.hbv1.Controllers.ReportController;
+import is.hi.hbv1.Persistence.Repositories.ReportRepository;
 
 import javax.persistence.*;
 import java.io.Serializable;

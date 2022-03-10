@@ -17,11 +17,12 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
 @Controller
-public class ReportController {
+public class ReportController implements Serializable {
     private ReportService reportService;
 
     @Autowired
@@ -61,9 +62,10 @@ public class ReportController {
         String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         String tempImage = "";
 
+        Report savedReport = reportService.save(report);
+
         if(filename.hashCode() != 0) {
             report.setReportImages(filename);
-            Report savedReport = reportService.save(report);
             String uploadDir = "uploads/reportImages/" + savedReport.getReportID();
 
             try {
