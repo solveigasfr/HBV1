@@ -15,23 +15,15 @@ import java.util.List;
 @Table(name = "reports")
 // kommenta hér hvað serializable gerir
 @JsonIgnoreProperties({"reportLocation"})
+
 public class Report implements Serializable {
 
     private long userID;
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long reportID;
 
-    /*
-    TODO
-        -Get the Report to save more stuff than reportSubject
-            -Find a way to get reportID and userID from a saved report
-            -Find a way to save reportTitle to the report
-        -Later: reportImages, reportLocation
-     */
     @NotNull
     private ReportTitle reportTitle;
     private String reportSubject = null;
@@ -60,14 +52,6 @@ public class Report implements Serializable {
         this.reportDate = reportDate;
     }
 
-    public boolean isSelected(ReportTitle selectedReportTitle){
-        if (selectedReportTitle != null) {
-            return selectedReportTitle.equals(reportTitle);
-        }
-        return false;
-    }
-
-
     public long getUserID() {
         return userID;
     }
@@ -75,7 +59,6 @@ public class Report implements Serializable {
     public void setUserID(long userID) {
         this.userID = userID;
     }
-
 
     public long getReportID() {
         return reportID;
@@ -89,7 +72,7 @@ public class Report implements Serializable {
         return reportTitle;
     }
 
-    public String getReportTitleAsString(){
+    public String getReportTitleAsString() {
         return reportTitle.getDisplayName();
     }
 
@@ -128,7 +111,6 @@ public class Report implements Serializable {
     public void setReportDate(LocalDate reportDate) {
         this.reportDate = reportDate;
     }
-
 
     @Transient
     public String getReportImagesPath() {
