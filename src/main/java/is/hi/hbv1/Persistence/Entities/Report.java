@@ -41,7 +41,7 @@ public class Report implements Serializable {
     private String reportImages;
 
     //@NotNull
-    
+
     private LocalDate reportDate;
 
     public Report() {
