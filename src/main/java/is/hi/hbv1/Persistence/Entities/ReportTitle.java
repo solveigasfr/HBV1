@@ -1,4 +1,5 @@
 package is.hi.hbv1.Persistence.Entities;
+
 import javax.lang.model.element.Element;
 
 /* Report titles are implemented as a seperate enum class because

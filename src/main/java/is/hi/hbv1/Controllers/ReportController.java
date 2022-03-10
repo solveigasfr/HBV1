@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -24,6 +25,7 @@ import java.util.List;
 @Controller
 public class ReportController implements Serializable {
     private ReportService reportService;
+
 
     @Autowired
     public ReportController(ReportService reportService) {
@@ -62,6 +64,7 @@ public class ReportController implements Serializable {
         String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         String tempImage = "";
 
+
         Report savedReport = reportService.save(report);
 
         if(filename.hashCode() != 0) {
@@ -81,10 +84,7 @@ public class ReportController implements Serializable {
         String tempTitle = report.getReportTitleAsString();
         String tempSubject = report.getReportSubject();
         String tempLocation = report.getReportLocation().toString();
-
         Email.sendEmail(tempEmail, tempTitle, tempSubject, tempLocation, tempImage, sessionUser.getUserName());
-
-        //model.addAttribute("reportTitle", report.getReportTitle());
         return "confirmation";
     }
 
