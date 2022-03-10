@@ -22,7 +22,7 @@
         </div>
     </div>
 
-    <div class="field">
+    <div class="field" th:classappend="${#fields.hasErrors('userEmail')}? 'has-error': ' '">
         <label class="label" for="userEmail">Email</label>
         <div class="control">
             <input class="input" type="email" placeholder="email@example.is" name="userEmail" id="userEmail" th:field="*{userEmail}"

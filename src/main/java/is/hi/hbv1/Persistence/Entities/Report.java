@@ -1,5 +1,6 @@
 package is.hi.hbv1.Persistence.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "reports")
 // kommenta hér hvað serializable gerir
+@JsonIgnoreProperties({"reportLocation"})
 public class Report implements Serializable {
 
     private long userID;
@@ -28,7 +30,6 @@ public class Report implements Serializable {
             -Find a way to save reportTitle to the report
         -Later: reportImages, reportLocation
      */
-
     @NotNull
     private ReportTitle reportTitle;
     private String reportSubject = null;
@@ -40,6 +41,7 @@ public class Report implements Serializable {
     private String reportImages;
 
     //@NotNull
+
     private LocalDate reportDate;
 
     public Report() {
