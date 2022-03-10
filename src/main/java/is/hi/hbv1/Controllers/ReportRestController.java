@@ -24,11 +24,10 @@ import java.util.List;
 @RestController
 public class ReportRestController {
     private ReportService reportService;
-    private UserService userService;
 
     @Autowired
-    public ReportRestController(UserService userService) {
-        this.userService = userService;
+    public ReportRestController(ReportService reportService) {
+        this.reportService = reportService;
     }
 
     @RequestMapping("/getAllReports")
@@ -40,14 +39,6 @@ public class ReportRestController {
         return allReports;
     }
 
-    @RequestMapping("/getUser")
-    public List<User> getUser() throws InterruptedException {
-        // Call a method in a Service Class
-        List<User> user = userService.findAll();
-        // Add some data to the Model
-        //model.addAttribute("reports", allReports);
-        return user;
-    }
     /*
     @RequestMapping(value = "/createReport", method = RequestMethod.GET)
     public String newReportGET(Report report, Model model, HttpSession session) {
