@@ -4,9 +4,11 @@ import is.hi.hbv1.Persistence.Entities.User;
 import is.hi.hbv1.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@RestController
 public class UserRestController {
 
     private UserService userService;
