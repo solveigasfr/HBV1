@@ -19,6 +19,8 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -39,6 +41,37 @@ public class ReportRestController {
         return allReports;
     }
 
+    @RequestMapping("/getAllReportTitles")
+    public List<String> getAllReportTitles() throws InterruptedException {
+        // Call a method in a Service Class
+//        List<String> allReportTitles = reportService.findAll();
+        List<String> allReportTitles = new ArrayList<String>();
+        String temp_title = "";
+        for (ReportTitle r_title: ReportTitle.values()) {
+            temp_title = r_title.getDisplayName();
+            allReportTitles.add(temp_title);
+        }
+        // Add some data to the Model
+        //model.addAttribute("reports", allReports);
+        return allReportTitles;
+    }
+//    @RequestMapping("/getAllReportTitles")
+//    public ArrayList<ReportTitle> getAllReportTitles() throws InterruptedException {
+//        // Call a method in a Service Class
+////        List<String> allReportTitles = reportService.findAll();
+////        List<String> allReportTitles = new ArrayList<String>();
+//        ArrayList<ReportTitle> reportTitles= new ArrayList<>();
+//        ReportTitle temp_title;
+//        System.out.println("Ingimar testing here... adding reportTitles to a list");
+//        for (ReportTitle r_title: ReportTitle.values()) {
+//            temp_title = r_title;
+//            reportTitles.add(temp_title);
+//            System.out.println(temp_title.getDisplayName());
+//        }
+//        // Add some data to the Model
+//        //model.addAttribute("reports", allReports);
+//        return reportTitles;
+//    }
     /*
     @RequestMapping(value = "/createReport", method = RequestMethod.GET)
     public String newReportGET(Report report, Model model, HttpSession session) {
