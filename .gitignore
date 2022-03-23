@@ -270,3 +270,4 @@ out
 database/
 
 sqlite3.exe
+.idea/runConfigurations.xml
