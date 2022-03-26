@@ -52,4 +52,15 @@ public class UserRestController {
         return null;
     }
 
+    @RequestMapping("/getUserPassword")
+    public String getUserPassword() throws InterruptedException {
+        String userPassword = getUserPassword();
+        return userPassword;
+    }
+
+    @RequestMapping("/changeUserPassword")
+    public String changeUserPassword(User user, String password) throws InterruptedException {
+        String newUserPassword = changeUserPassword(user, password);
+        return newUserPassword;
+    }
 }
