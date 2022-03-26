@@ -3,9 +3,6 @@ package is.hi.hbv1.Controllers;
 import is.hi.hbv1.Persistence.Entities.User;
 import is.hi.hbv1.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +29,7 @@ public class UserRestController {
     }
 
     @RequestMapping(value = "/validateLogin/{email}/{password}")
-    public User validatelogin(@PathVariable(value = "email") String email, @PathVariable(value = "password") String password) {
+    public User validateLogin(@PathVariable(value = "email") String email, @PathVariable(value = "password") String password) {
 
         if(email == null || password == null) {
             return null;
@@ -53,10 +50,12 @@ public class UserRestController {
         return null;
     }
 
+    // TODO: implement getUserPassword() in UserRestController
     @RequestMapping("/getUserPassword")
     public String getUserPassword() throws InterruptedException {
-        String userPassword = getUserPassword();
-        return userPassword;
+        //String userPassword = getUserPassword();
+        //return userPassword;
+        return "test";
     }
 
     @RequestMapping("/changeUserPassword")
