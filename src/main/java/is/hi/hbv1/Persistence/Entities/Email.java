@@ -39,6 +39,34 @@ public class Email {
         Transport.send(message);
     }
 
+    public static void sendForgotPasswordEmail(String recipientEmail, String userName,int token) throws MessagingException {
+        Properties properties = new Properties();
+
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+
+        String myAccountEmail = "hbv1h27@gmail.com";
+        String password = "Hbv1bisv";
+
+        Session session = Session.getInstance(properties, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(myAccountEmail, password);
+            }
+        });
+
+        MimeMessage message;
+        message = prepareForgotPasswordEmail(session, myAccountEmail, userName, token, recipientEmail);
+        if (message != null) {
+            Transport.send(message);
+        }
+        else {
+            System.out.println("Message is null! Fix me!");
+        }
+    }
+
     // message with image
     private static MimeMessage prepareMessageWithImage(Session session, String myAccountEmail, String recipient,
                                                        String title, String subject, String location, String image, String userName) {
@@ -111,5 +139,39 @@ public class Email {
             e.printStackTrace();
         }
         return message;
+    }
+
+    // session, myAccountEmail, userName, token, recipientEmail, title, subject
+    private static MimeMessage prepareForgotPasswordEmail(Session session, String myAccountEmail, String userName,
+                                                          int token, String recipientEmail) {
+        MimeMessage message = new MimeMessage(session);
+        try {
+            message.setFrom(new InternetAddress(myAccountEmail));
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipientEmail));
+            message.setSubject("RVK Report System password reset");
+
+            MimeMultipart multipart = new MimeMultipart("related");
+
+            // first part  (the html)
+            BodyPart messageBodyPart = new MimeBodyPart();
+            String htmlText = "<H1>Reset password - RVK Report System</H1>"
+                    + "<p>Hi " + userName + ",</p>"
+                    + "<p>We received a request to reset your password for the RVK Report System.</p>"
+                    + "<p>Enter the following password reset code:</p>"
+                    + "<H3>" + token + "</H3>"
+                    + "<p>This message was sent to " + recipientEmail + " at your request.</p>";
+            messageBodyPart.setContent(htmlText, "text/html;charset=utf-8");
+
+            // add it
+            multipart.addBodyPart(messageBodyPart);
+
+            // put everything together
+            message.setContent(multipart);
+
+            return message;
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
