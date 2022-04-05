@@ -1,7 +1,6 @@
 package is.hi.hbv1.Persistence.Entities;
 
-import is.hi.hbv1.Controllers.UserController;
-import is.hi.hbv1.Persistence.Repositories.UserRepository;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,6 +19,9 @@ public class User implements Serializable {
     private String userEmail;
 
     private String userPassword;
+
+    @Nullable
+    private int userForgotPasswordToken;
 
     public User() {
     }
@@ -60,5 +62,13 @@ public class User implements Serializable {
 
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
+    }
+
+    public int getUserForgotPasswordToken() {
+        return userForgotPasswordToken;
+    }
+
+    public void setUserForgotPasswordToken(int token) {
+        this.userForgotPasswordToken = token;
     }
 }
