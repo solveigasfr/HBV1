@@ -64,17 +64,25 @@ public class UserRestController {
         return newUserPassword;
     }
 
-    @RequestMapping(value = "/deleteAccount/{email}/{password}")
-    public Boolean deleteAccount(@PathVariable(value = "email") String email, @PathVariable(value = "password") String password) {
-        if(email == null || password == null) {
+    @RequestMapping(value = "/deleteAccount/{userIdString}")
+    public Boolean deleteAccount(@PathVariable(value = "userIdString") String userIdString) {
+        System.out.println("inside deleteAccount");
+        if(userIdString.equals("")) {
+            System.out.println("\nid is null...\n");
             return false;
         }
-        User user = userService.findByUserEmail(email);
-        if(!user.getUserPassword().equals(password)) {
+        System.out.println("userId is " + userIdString);
+        System.out.println("changing the id from string to Long");
+        Long userID = Long.parseLong(userIdString);
+        User user = userService.findByUserID(userID);
+        System.out.println("About to delete user with email: " + user.getUserEmail());
+        try {
+            userService.delete(user);
+        } catch (Exception e) {
+            System.out.println("User was not deleted!");
+            System.out.println(e.getMessage());
             return false;
         }
-        System.out.println("Deleting user with email: " + user.getUserEmail());
-        userService.delete(user);
         System.out.println(user.getUserEmail() + " has been deleted!");
         return true;
     }
