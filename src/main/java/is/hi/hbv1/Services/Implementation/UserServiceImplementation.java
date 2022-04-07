@@ -1,6 +1,5 @@
 package is.hi.hbv1.Services.Implementation;
 
-import is.hi.hbv1.Persistence.Entities.Report;
 import is.hi.hbv1.Persistence.Entities.User;
 import is.hi.hbv1.Persistence.Repositories.UserRepository;
 import is.hi.hbv1.Services.UserService;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -40,6 +38,11 @@ public class UserServiceImplementation implements UserService {
     @Override
     public User findByUserEmail(String userEmail) {
         return userRepository.findByUserEmail(userEmail);
+    }
+
+    @Override
+    public User findByUserID(Long userID) {
+        return userRepository.findByUserID(userID);
     }
 
     @Override
