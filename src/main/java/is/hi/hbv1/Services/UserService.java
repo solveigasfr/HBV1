@@ -13,6 +13,8 @@ public interface UserService {
 
     User findByUserEmail(String userEmail);
 
+    User findByUserID(Long userID);
+
     List<User> findAll();
 
     String get_SHA_512(String passwordToHash);
