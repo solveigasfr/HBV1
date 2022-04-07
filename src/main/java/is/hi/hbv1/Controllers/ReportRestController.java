@@ -41,6 +41,13 @@ public class ReportRestController {
         return allReports;
     }
 
+    @RequestMapping("/getAllReportsByUserID")
+    public List<Report> getAllReportsByUserID(long userID) throws InterruptedException {
+        // Call a method in a Service Class
+        List<Report> allReportsByUserID = reportService.findReportsByUserID(userID);
+        return allReportsByUserID;
+    }
+
     @RequestMapping("/getAllReportTitles")
     public List<String> getAllReportTitles() throws InterruptedException {
         // Call a method in a Service Class

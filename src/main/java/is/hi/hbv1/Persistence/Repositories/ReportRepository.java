@@ -8,6 +8,10 @@ import java.util.List;
 public interface ReportRepository extends JpaRepository<Report, Long> {
     List<Report> findAll();
 
+    //List<Report> findAllByUserID(long userID);
+
+    List<Report> findReportsByUserID(long userID);
+
     Report save(Report report);
 
     void delete(Report report);
