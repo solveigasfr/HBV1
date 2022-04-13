@@ -4,7 +4,6 @@ import is.hi.hbv1.FileHelper;
 import is.hi.hbv1.Persistence.Entities.Email;
 import is.hi.hbv1.Persistence.Entities.Report;
 import is.hi.hbv1.Persistence.Entities.ReportTitle;
-import is.hi.hbv1.Persistence.Entities.User;
 import is.hi.hbv1.Persistence.Repositories.ReportRepository;
 import is.hi.hbv1.Services.ReportService;
 import is.hi.hbv1.Services.UserService;
