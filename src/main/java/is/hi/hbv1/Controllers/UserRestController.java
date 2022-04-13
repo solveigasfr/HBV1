@@ -74,18 +74,17 @@ public class UserRestController {
         // if not then this returns null
     }
 
-    // TODO: implement getUserPassword() in UserRestController
-    @RequestMapping("/getUserPassword")
-    public String getUserPassword() throws InterruptedException {
-        //String userPassword = getUserPassword();
-        //return userPassword;
-        return "test";
+    @RequestMapping("/getUserPassword/{userToken}")
+    public String getUserPassword(@PathVariable(value = "userToken") String userToken) {
+        System.out.println("Encoded string is: " + userToken);
+        Pair<String, String> decodedEmailAndPassword = myDecoder(userToken);
+        String userPassword = decodedEmailAndPassword.getSecond();
+        return userPassword;
     }
 
     @RequestMapping("/changeUserPassword")
     public String changeUserPassword(User user, String password) throws InterruptedException {
-        String newUserPassword = changeUserPassword(user, password);
-        return newUserPassword;
+         return "to be added";
     }
 
     @RequestMapping(value = "/deleteAccount/{userIdString}")
