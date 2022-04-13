@@ -2,7 +2,6 @@ package is.hi.hbv1.Controllers;
 
 import is.hi.hbv1.Persistence.Entities.Report;
 import is.hi.hbv1.Persistence.Entities.User;
-import is.hi.hbv1.Persistence.Repositories.UserRepository;
 import is.hi.hbv1.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

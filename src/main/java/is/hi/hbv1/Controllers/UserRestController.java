@@ -4,12 +4,11 @@ import is.hi.hbv1.Persistence.Entities.User;
 import is.hi.hbv1.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class UserRestController {
@@ -55,6 +54,21 @@ public class UserRestController {
         return null;
     }
      */
+
+    @PostMapping(value ="/signupUser")
+    public User signupUser(@RequestParam Map<String, String> signupMap) {
+        String name = signupMap.get("name");
+        String email = signupMap.get("email");
+        String passwordToken = passwordDecoder(signupMap.get("token"));
+
+        System.out.println("name" + name);
+        System.out.println("email" + email);
+        System.out.println("password" + passwordToken);
+        User user = new User(name, email, passwordToken);
+        userService.save(user);
+        user = userService.findByUserEmail(email);
+        return userService.logIn(user);
+    }
 
     @RequestMapping("/loginUser/{userToken}")
     public User loginUser(@PathVariable(value = "userToken") String userToken) {
@@ -124,5 +138,11 @@ public class UserRestController {
         System.out.println("here is the decoded email: " + email);
         System.out.println("here is the decoded password: " + password);
         return Pair.of(email, password);
+    }
+
+    private String passwordDecoder(String token) {
+        String decodedPassword = new String(base64Decoder.decode(token));
+        System.out.println("Decoded password is: " + decodedPassword);
+        return decodedPassword;
     }
 }
