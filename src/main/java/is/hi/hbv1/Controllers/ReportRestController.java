@@ -41,10 +41,12 @@ public class ReportRestController {
         return allReports;
     }
 
-    @RequestMapping("/getAllReportsByUserID")
-    public List<Report> getAllReportsByUserID(long userID) throws InterruptedException {
+    @RequestMapping("/getAllReportsByUserID/{id}")
+    public List<Report> getAllReportsByUserID(@PathVariable("id") long userID) throws InterruptedException {
+        System.out.println("UserID in ReportRestController getAllReportsByUserID is " + userID);
         // Call a method in a Service Class
         List<Report> allReportsByUserID = reportService.findReportsByUserID(userID);
+        System.out.println(allReportsByUserID);
         return allReportsByUserID;
     }
 
