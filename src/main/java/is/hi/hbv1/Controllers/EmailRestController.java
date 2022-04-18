@@ -12,33 +12,46 @@ import javax.mail.MessagingException;
 
 @RestController
 public class EmailRestController {
-    private UserService userService;
+    private final UserService userService;
+    private int debugInt = 0;
 
     @Autowired
-    public EmailRestController(UserService userService) {this.userService = userService; }
+    public EmailRestController(UserService userService) {
+        System.out.println("Running the constructor ... beep boop " + debugInt);
+        this.userService = userService;
+    }
 
     @RequestMapping("/sendForgotPasswordToken/{email}")
     public int sendForgotPasswordToken(@PathVariable(value = "email") String email) throws MessagingException {
+        debugInt++;
+        System.out.println("start of function: debugInt is: " + debugInt);
+        //if (debugInt % 2 == 0) { // this would be a cheesy fix, which would cause problems in the future
+        //    return -1;
+        //}
+        System.out.println("A little further, debugInt is: " + debugInt);
+        User user = new User();
         // checking if the email is tied to a user in the database
-        User user = userService.findByUserEmail(email);
-        User exists = userService.logIn(user);
-        if (exists == null) {
-            return -1;
+        try {
+            user = userService.findByUserEmail(email);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        else {
+        int token = -1;
+        if (user != null) {
+            System.out.println("else statement: debugInt is: " + debugInt);
             // creating the token
-            int token = createForgotPasswordToken();
+            token = createForgotPasswordToken();
             System.out.println("The token is: " + token);
 
             // adding the token to the user
-            exists.setUserForgotPasswordToken(token);
-            userService.save(exists);
+            user.setUserForgotPasswordToken(token);
+            userService.save(user);
             // TODO: (later) delete the token from the user after some period of time
 
             // sending the email with the token
             Email.sendForgotPasswordEmail(email, user.getUserName(), token);
-            return token;
         }
+        return token;
     }
 
     // returns a random 6 digit number between 100000 and 999999
