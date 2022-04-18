@@ -140,6 +140,15 @@ public class UserRestController {
         return true;
     }
 
+    @RequestMapping(value = "/getUserPasswordToken/{email}")
+    public Integer getUserPasswordToken(@PathVariable(value = "email") String email) {
+        User user = userService.findByUserEmail(email);
+        if (user == null) {
+            return -1;
+        }
+        return user.getUserForgotPasswordToken();
+    }
+
     private Pair<String, String> myDecoder(String userToken) {
         String decodedToken = new String(base64Decoder.decode(userToken));
         System.out.println("Decoded string is: " + decodedToken);
