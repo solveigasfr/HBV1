@@ -1,6 +1,7 @@
 package is.hi.hbv1.Controllers;
 
 import is.hi.hbv1.Persistence.Entities.User;
+import is.hi.hbv1.Persistence.Repositories.UserRepository;
 import is.hi.hbv1.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
@@ -15,6 +16,7 @@ public class UserRestController {
     private static final Base64.Decoder base64Decoder = Base64.getDecoder(); // for decoding server calls
 
     private UserService userService;
+    private UserRepository userRepository;
 
     @Autowired
     public UserRestController(UserService userService) {
@@ -88,18 +90,32 @@ public class UserRestController {
         // if not then this returns null
     }
 
-    // TODO: implement getUserPassword() in UserRestController
-    @RequestMapping("/getUserPassword")
-    public String getUserPassword() throws InterruptedException {
-        //String userPassword = getUserPassword();
-        //return userPassword;
-        return "test";
+    @RequestMapping("/getUserPassword/{email}")
+    public String getUserPassword(@PathVariable(value = "email") String email) {
+        System.out.println("trying to fetch current user password" + email);
+        User user = userService.findByUserEmail(email);
+        String currentUserPassword = user.getUserPassword();
+        return currentUserPassword;
     }
 
-    @RequestMapping("/changeUserPassword")
-    public String changeUserPassword(User user, String password) throws InterruptedException {
-        String newUserPassword = changeUserPassword(user, password);
-        return newUserPassword;
+    @PostMapping("/changeUserPassword")
+    public Boolean changeUserPassword(@RequestParam Map<String, String> changePasswordMap) {
+
+        System.out.println("trying to change user password");
+        try {
+            String email = changePasswordMap.get("email");
+            String newPassword = passwordDecoder(changePasswordMap.get("token"));
+            User user = userService.findByUserEmail(email);
+            System.out.println(newPassword);
+            user.setUserPassword(newPassword);
+            userService.save(user);
+            System.out.println("done saving new password");
+            return true;
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
     @RequestMapping(value = "/deleteAccount/{userIdString}")
@@ -122,6 +138,15 @@ public class UserRestController {
         }
         System.out.println(user.getUserEmail() + " has been deleted!");
         return true;
+    }
+
+    @RequestMapping(value = "/getUserPasswordToken/{email}")
+    public Integer getUserPasswordToken(@PathVariable(value = "email") String email) {
+        User user = userService.findByUserEmail(email);
+        if (user == null) {
+            return -1;
+        }
+        return user.getUserForgotPasswordToken();
     }
 
     private Pair<String, String> myDecoder(String userToken) {
