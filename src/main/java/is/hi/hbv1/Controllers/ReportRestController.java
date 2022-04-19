@@ -16,13 +16,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.time.LocalDate;
 
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Map;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @RestController
 public class ReportRestController {
@@ -41,6 +40,40 @@ public class ReportRestController {
         // Add some data to the Model
         //model.addAttribute("reports", allReports);
         return allReports;
+    }
+    @Transactional
+    @RequestMapping("getReport/{reportIdString}")
+    public HashMap<String, String> getReport(@PathVariable(value = "reportIdString") String reportIdString) throws InterruptedException {
+        System.out.println("I am here");
+        long tempReportId = Long.parseLong(reportIdString);
+        Report report = reportService.findByReportID(tempReportId);
+        HashMap<String, String> reportMap = new HashMap<String, String>();
+        long tempUserIdLong = report.getUserID();
+        String tempTitle = report.getReportTitleAsString();
+        String tempReportSubject = report.getReportSubject();
+        List<Double> tempLocation = report.getReportLocation();
+        String tempImg = report.getReportImages();
+        LocalDate tempDate = report.getReportDate();
+        String tempUserId = Long.toString(tempUserIdLong);
+        Double tempLatD = tempLocation.get(0);
+        Double tempLongD = tempLocation.get(1);
+        String tempLat = Double.toString(tempLatD);
+        String tempLong = Double.toString(tempLongD);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd MM yyyy");
+        String tempDateStr = tempDate.format(dtf);
+
+        reportMap.put("KEY_ID", tempUserId);
+        reportMap.put("KEY_TITLE", tempTitle);
+        reportMap.put("KEY_SUB", tempReportSubject);
+        reportMap.put("KEY_LAT", tempLat);
+        reportMap.put("KEY_LONG", tempLong);
+        reportMap.put("KEY_IMG", tempImg);
+        reportMap.put("KEY_DATE", tempDateStr);
+
+        if(report != null) {
+            return reportMap;
+        }
+        return null;
     }
 
     @RequestMapping("/getAllReportTitles")
