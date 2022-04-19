@@ -6,6 +6,7 @@ import is.hi.hbv1.Controllers.ReportController;
 import is.hi.hbv1.Persistence.Repositories.ReportRepository;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,8 +15,6 @@ import java.util.List;
 @Entity
 @Table(name = "reports")
 // kommenta hér hvað serializable gerir
-@JsonIgnoreProperties({"reportLocation"})
-
 public class Report implements Serializable {
 
     private long userID;
@@ -31,7 +30,7 @@ public class Report implements Serializable {
     @ElementCollection
     private List<Double> reportLocation = new ArrayList<>();
 
-    @Column(nullable = true, length = 100000)
+    @Column(nullable = true, length = 1000000000)
     private String reportImages;
 
     //@NotNull
