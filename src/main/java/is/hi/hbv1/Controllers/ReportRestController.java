@@ -4,7 +4,6 @@ import is.hi.hbv1.FileHelper;
 import is.hi.hbv1.Persistence.Entities.Email;
 import is.hi.hbv1.Persistence.Entities.Report;
 import is.hi.hbv1.Persistence.Entities.ReportTitle;
-import is.hi.hbv1.Persistence.Entities.User;
 import is.hi.hbv1.Persistence.Repositories.ReportRepository;
 import is.hi.hbv1.Services.ReportService;
 import is.hi.hbv1.Services.UserService;
@@ -21,10 +20,13 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class ReportRestController {
+    private static final Base64.Decoder base64Decoder = Base64.getDecoder();
     private ReportService reportService;
 
     @Autowired
@@ -64,6 +66,41 @@ public class ReportRestController {
         //model.addAttribute("reports", allReports);
         return allReportTitles;
     }
+
+    @PostMapping(value = "/saveReport")
+    public Boolean saveReport(@RequestParam Map<String,String> reportMap) {
+        String userID = reportMap.get("ID");
+        String newReportTitle = reportMap.get("reportTitle");
+        String reportSubject = reportMap.get("reportSubject");
+        String reportLat = reportMap.get("reportLat");
+        String reportLong = reportMap.get("reportLong");
+        String reportImg = reportMap.get("reportImg");
+        try {
+            Long saveThisUserID = Long.parseLong(userID);
+            ReportTitle reportTitleNew = ReportTitle.fromString(newReportTitle);
+            System.out.println("printing reporto titelos");
+            System.out.println(reportTitleNew);
+            List<Double> listD = new ArrayList<>();
+            Double lat = Double.parseDouble(reportLat);
+            Double newReportLong = Double.parseDouble(reportLong);
+            listD.add(lat);
+            listD.add(newReportLong);
+            LocalDate date = LocalDate.now();
+            Report newReport = new Report(saveThisUserID, reportTitleNew, reportSubject, listD, reportImg, date);
+            reportService.save(newReport);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /*
+    private byte[] imageDecoder(String image) {
+        byte[] decodedImage = base64Decoder.decode(image);
+        System.out.println("Decoded password is: " + decodedImage);
+        return decodedImage;
+    }*/
 //    @RequestMapping("/getAllReportTitles")
 //    public ArrayList<ReportTitle> getAllReportTitles() throws InterruptedException {
 //        // Call a method in a Service Class

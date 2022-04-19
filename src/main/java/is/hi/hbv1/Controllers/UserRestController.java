@@ -1,21 +1,22 @@
 package is.hi.hbv1.Controllers;
 
 import is.hi.hbv1.Persistence.Entities.User;
+import is.hi.hbv1.Persistence.Repositories.UserRepository;
 import is.hi.hbv1.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class UserRestController {
     private static final Base64.Decoder base64Decoder = Base64.getDecoder(); // for decoding server calls
 
     private UserService userService;
+    private UserRepository userRepository;
 
     @Autowired
     public UserRestController(UserService userService) {
@@ -56,6 +57,21 @@ public class UserRestController {
     }
      */
 
+    @PostMapping(value ="/signupUser")
+    public User signupUser(@RequestParam Map<String, String> signupMap) {
+        String name = signupMap.get("name");
+        String email = signupMap.get("email");
+        String passwordToken = passwordDecoder(signupMap.get("token"));
+
+        System.out.println("name" + name);
+        System.out.println("email" + email);
+        System.out.println("password" + passwordToken);
+        User user = new User(name, email, passwordToken);
+        userService.save(user);
+        user = userService.findByUserEmail(email);
+        return userService.logIn(user);
+    }
+
     @RequestMapping("/loginUser/{userToken}")
     public User loginUser(@PathVariable(value = "userToken") String userToken) {
         System.out.println("Encoded string is: " + userToken);
@@ -74,18 +90,32 @@ public class UserRestController {
         // if not then this returns null
     }
 
-    // TODO: implement getUserPassword() in UserRestController
-    @RequestMapping("/getUserPassword")
-    public String getUserPassword() throws InterruptedException {
-        //String userPassword = getUserPassword();
-        //return userPassword;
-        return "test";
+    @RequestMapping("/getUserPassword/{email}")
+    public String getUserPassword(@PathVariable(value = "email") String email) {
+        System.out.println("trying to fetch current user password" + email);
+        User user = userService.findByUserEmail(email);
+        String currentUserPassword = user.getUserPassword();
+        return currentUserPassword;
     }
 
-    @RequestMapping("/changeUserPassword")
-    public String changeUserPassword(User user, String password) throws InterruptedException {
-        String newUserPassword = changeUserPassword(user, password);
-        return newUserPassword;
+    @PostMapping("/changeUserPassword")
+    public Boolean changeUserPassword(@RequestParam Map<String, String> changePasswordMap) {
+
+        System.out.println("trying to change user password");
+        try {
+            String email = changePasswordMap.get("email");
+            String newPassword = passwordDecoder(changePasswordMap.get("token"));
+            User user = userService.findByUserEmail(email);
+            System.out.println(newPassword);
+            user.setUserPassword(newPassword);
+            userService.save(user);
+            System.out.println("done saving new password");
+            return true;
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
     @RequestMapping(value = "/deleteAccount/{userIdString}")
@@ -110,6 +140,15 @@ public class UserRestController {
         return true;
     }
 
+    @RequestMapping(value = "/getUserPasswordToken/{email}")
+    public Integer getUserPasswordToken(@PathVariable(value = "email") String email) {
+        User user = userService.findByUserEmail(email);
+        if (user == null) {
+            return -1;
+        }
+        return user.getUserForgotPasswordToken();
+    }
+
     private Pair<String, String> myDecoder(String userToken) {
         String decodedToken = new String(base64Decoder.decode(userToken));
         System.out.println("Decoded string is: " + decodedToken);
@@ -125,5 +164,11 @@ public class UserRestController {
         System.out.println("here is the decoded email: " + email);
         System.out.println("here is the decoded password: " + password);
         return Pair.of(email, password);
+    }
+
+    private String passwordDecoder(String token) {
+        String decodedPassword = new String(base64Decoder.decode(token));
+        System.out.println("Decoded password is: " + decodedPassword);
+        return decodedPassword;
     }
 }
