@@ -30,7 +30,7 @@ public class Report implements Serializable {
     @ElementCollection
     private List<Double> reportLocation = new ArrayList<>();
 
-    @Column(nullable = true, length = 1000000000)
+    @Column(nullable = true, columnDefinition = "TEXT")
     private String reportImages;
 
     //@NotNull
