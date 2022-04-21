@@ -1,25 +1,13 @@
 package is.hi.hbv1.Controllers;
 
-import is.hi.hbv1.FileHelper;
-import is.hi.hbv1.Persistence.Entities.Email;
 import is.hi.hbv1.Persistence.Entities.Report;
 import is.hi.hbv1.Persistence.Entities.ReportTitle;
-import is.hi.hbv1.Persistence.Repositories.ReportRepository;
 import is.hi.hbv1.Services.ReportService;
-import is.hi.hbv1.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.mail.MessagingException;
-import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
-import java.io.IOException;
 import java.time.LocalDate;
-
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -27,6 +15,14 @@ import java.util.*;
 public class ReportRestController {
     private static final Base64.Decoder base64Decoder = Base64.getDecoder();
     private ReportService reportService;
+    private static final String KEY_USER_ID = "user_id";
+    private static final String KEY_TITLE = "title";
+    private static final String KEY_SUBJECT = "subject";
+    private static final String KEY_LOC_LAT = "location_latitude";
+    private static final String KEY_LOC_LONG = "location_longitude";
+    private static final String KEY_IMAGE = "image";
+    private static final String KEY_DATE = "date";
+    private static final String KEY_REPORT_ID = "report_id";
 
     @Autowired
     public ReportRestController(ReportService reportService) {
@@ -62,13 +58,13 @@ public class ReportRestController {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd MM yyyy");
         String tempDateStr = tempDate.format(dtf);
 
-        reportMap.put("KEY_ID", tempUserId);
-        reportMap.put("KEY_TITLE", tempTitle);
-        reportMap.put("KEY_SUB", tempReportSubject);
-        reportMap.put("KEY_LAT", tempLat);
-        reportMap.put("KEY_LONG", tempLong);
-        reportMap.put("KEY_IMG", tempImg);
-        reportMap.put("KEY_DATE", tempDateStr);
+        reportMap.put(KEY_USER_ID, tempUserId);
+        reportMap.put(KEY_TITLE, tempTitle);
+        reportMap.put(KEY_SUBJECT, tempReportSubject);
+        reportMap.put(KEY_LOC_LAT, tempLat);
+        reportMap.put(KEY_LOC_LONG, tempLong);
+        reportMap.put(KEY_IMAGE, tempImg);
+        reportMap.put(KEY_DATE, tempDateStr);
 
         if(report != null) {
             return reportMap;
@@ -76,13 +72,104 @@ public class ReportRestController {
         return null;
     }
 
+    /*
     @RequestMapping("/getAllReportsByUserID/{id}")
-    public List<Report> getAllReportsByUserID(@PathVariable("id") long userID) throws InterruptedException {
-        System.out.println("UserID in ReportRestController getAllReportsByUserID is " + userID);
+    public List<Report> getAllReportsByUserID(@PathVariable("id") String userIDString) throws InterruptedException {
+        System.out.println();
+        System.out.println("getAllReportsByUserID started");
+        long userID = Long.parseLong(userIDString);
+        System.out.println("Calling reportService.findReportsByUserID with userID: " + userID);
         // Call a method in a Service Class
         List<Report> allReportsByUserID = reportService.findReportsByUserID(userID);
-        System.out.println(allReportsByUserID);
+
+        if (allReportsByUserID != null) {
+            System.out.println("printing subjects og reports that we will send");
+            for (int i = 0; i < allReportsByUserID.size(); i++) {
+                System.out.println("Subject of this one is subject is " + allReportsByUserID.get(i).getReportSubject());
+            }
+        }
         return allReportsByUserID;
+    }
+     */
+
+    @RequestMapping("/getAllReportsByUserID/{id}")
+    public ArrayList<HashMap<String,String>> getAllReportsByUserID(@PathVariable("id") String userIDString) throws InterruptedException {
+        System.out.println();
+        System.out.println("getAllReportsByUserID started");
+        long userID = Long.parseLong(userIDString);
+        System.out.println("Calling reportService.findReportsByUserID with userID: " + userID);
+        // Call a method in a Service Class
+        List<Report> allReportsByUserID = reportService.findReportsByUserID(userID);
+
+        ArrayList<HashMap<String,String>> listOfReportsAsHashMaps = new ArrayList<>();
+
+        if (allReportsByUserID != null) {
+            Report r;
+            String tempUserID = "";
+            String tempTitle = "";
+            String tempSubj = "";
+            String tempLocationLat = "";
+            String tempLocationLong = "";
+            String tempImg = "";
+            String tempDate = "";
+            String tempReportID = "";
+
+            LocalDate localdate;
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd MM yyyy");
+
+            System.out.println("printing subjects and reports that we will send");
+            for (int i = 0; i < allReportsByUserID.size(); i++) {
+                HashMap<String, String> reportMap = new HashMap<String, String>();
+                r = allReportsByUserID.get(i);
+                tempUserID = String.valueOf(r.getUserID());
+                tempTitle = r.getReportTitleAsString();
+                try {
+                    tempSubj = r.getReportSubject();
+                    System.out.println("Subject of this one is " + tempSubj);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    tempLocationLat = String.valueOf(r.getReportLocationLatitude());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    tempLocationLong = String.valueOf(r.getReportLocationLongitude());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    tempImg = r.getReportImages();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    localdate = r.getReportDate();
+                    tempDate = localdate.format(dtf);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                tempReportID = String.valueOf(r.getReportID());
+
+                reportMap.put(KEY_USER_ID, tempUserID);
+                reportMap.put(KEY_TITLE, tempTitle);
+                reportMap.put(KEY_SUBJECT, tempSubj);
+                reportMap.put(KEY_LOC_LAT, tempLocationLat);
+                reportMap.put(KEY_LOC_LONG, tempLocationLong);
+                reportMap.put(KEY_IMAGE, tempImg);
+                reportMap.put(KEY_DATE, tempDate);
+                reportMap.put(KEY_REPORT_ID, tempReportID);
+
+                listOfReportsAsHashMaps.add(reportMap);
+            }
+        }
+        return listOfReportsAsHashMaps;
     }
 
     @RequestMapping("/getAllReportTitles")
