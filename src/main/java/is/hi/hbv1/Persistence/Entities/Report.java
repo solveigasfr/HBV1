@@ -29,7 +29,7 @@ public class Report implements Serializable {
     private Double reportLocationLatitude;
     private Double reportLocationLongitude;
 
-    @Column(nullable = true, length = 1000000000)
+    @Column(nullable = true, columnDefinition = "TEXT")
     private String reportImages;
 
     //@NotNull
