@@ -37,26 +37,38 @@ public class ReportRestController {
         //model.addAttribute("reports", allReports);
         return allReports;
     }
-    @Transactional
+    //@Transactional
     @RequestMapping("getReport/{reportIdString}")
     public HashMap<String, String> getReport(@PathVariable(value = "reportIdString") String reportIdString) throws InterruptedException {
-        System.out.println("I am here");
         long tempReportId = Long.parseLong(reportIdString);
         Report report = reportService.findByReportID(tempReportId);
         HashMap<String, String> reportMap = new HashMap<String, String>();
-        long tempUserIdLong = report.getUserID();
-        String tempTitle = report.getReportTitleAsString();
-        String tempReportSubject = report.getReportSubject();
-        List<Double> tempLocation = report.getReportLocation();
-        String tempImg = report.getReportImages();
-        LocalDate tempDate = report.getReportDate();
-        String tempUserId = Long.toString(tempUserIdLong);
-        Double tempLatD = tempLocation.get(0);
-        Double tempLongD = tempLocation.get(1);
-        String tempLat = Double.toString(tempLatD);
-        String tempLong = Double.toString(tempLongD);
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd MM yyyy");
-        String tempDateStr = tempDate.format(dtf);
+        String tempUserId = "";
+        String tempTitle = "";
+        String tempReportSubject = "";
+        String tempImg = "";
+        String tempLat = "";
+        String tempLong = "";
+        String tempDateStr = "";
+
+        try{
+            long tempUserIdLong = report.getUserID();
+            tempTitle = report.getReportTitleAsString();
+            tempReportSubject = report.getReportSubject();
+            List<Double> tempLocation = report.getReportLocation();
+            tempImg = report.getReportImages();
+            LocalDate tempDate = report.getReportDate();
+            tempUserId = Long.toString(tempUserIdLong);
+            Double tempLatD = tempLocation.get(0);
+            Double tempLongD = tempLocation.get(1);
+            tempLat = Double.toString(tempLatD);
+            tempLong = Double.toString(tempLongD);
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd MM yyyy");
+            tempDateStr = tempDate.format(dtf);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         reportMap.put(KEY_USER_ID, tempUserId);
         reportMap.put(KEY_TITLE, tempTitle);
