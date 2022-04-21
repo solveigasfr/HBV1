@@ -1,12 +1,8 @@
 package is.hi.hbv1.Persistence.Entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
-import is.hi.hbv1.Controllers.ReportController;
-import is.hi.hbv1.Persistence.Repositories.ReportRepository;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,8 +23,11 @@ public class Report implements Serializable {
     private ReportTitle reportTitle;
     private String reportSubject = null;
 
-    @ElementCollection
-    private List<Double> reportLocation = new ArrayList<>();
+    //@ElementCollection
+    //private List<Double> reportLocation = new ArrayList<>();
+
+    private Double reportLocationLatitude;
+    private Double reportLocationLongitude;
 
     @Column(nullable = true, columnDefinition = "TEXT")
     private String reportImages;
@@ -46,7 +45,21 @@ public class Report implements Serializable {
         this.userID = userID;
         this.reportTitle = reportTitle;
         this.reportSubject = reportSubject;
-        this.reportLocation = reportLocation;
+        this.reportLocationLatitude = reportLocation.get(0);
+        this.reportLocationLongitude = reportLocation.get(1);
+        this.reportImages = reportImages;
+        this.reportDate = reportDate;
+    }
+
+    // nýr smiður, ilg, 20. apríl 2022
+    public Report(long userID, ReportTitle reportTitle, String reportSubject,
+                  Double reportLocationLatitude, Double reportLocationLongitude, String reportImages,
+                  LocalDate reportDate) {
+        this.userID = userID;
+        this.reportTitle = reportTitle;
+        this.reportSubject = reportSubject;
+        this.reportLocationLatitude = reportLocationLatitude;
+        this.reportLocationLongitude = reportLocationLongitude;
         this.reportImages = reportImages;
         this.reportDate = reportDate;
     }
@@ -88,11 +101,32 @@ public class Report implements Serializable {
     }
 
     public List<Double> getReportLocation() {
-        return reportLocation;
+        List<Double> result = new ArrayList<>();
+        result.add(0, reportLocationLatitude);
+        result.add(1, reportLocationLongitude);
+        return result;
     }
 
+    /*
     public void setReportLocation(List<Double> reportLocation) {
         this.reportLocation = reportLocation;
+    }
+     */
+
+    public Double getReportLocationLatitude() {
+        return reportLocationLatitude;
+    }
+
+    public void setReportLocationLatitude(Double reportLocationLatitude) {
+        this.reportLocationLatitude = reportLocationLatitude;
+    }
+
+    public Double getReportLocationLongitude() {
+        return reportLocationLongitude;
+    }
+
+    public void setReportLocationLongitude(Double reportLocationLongitute) {
+        this.reportLocationLongitude = reportLocationLongitute;
     }
 
     public String getReportImages() {

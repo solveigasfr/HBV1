@@ -29,6 +29,9 @@ public class ReportServiceImplementation implements ReportService {
     }
 
     @Override
+    public List<Report> findReportsByUserID(long userID) { return reportRepository.findReportsByUserID(userID); }
+
+    @Override
     public Report save(Report report) {
         return reportRepository.save(report);
     }
